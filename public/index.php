@@ -1,15 +1,11 @@
-<?php
+<?php 
+    //session_start();
 
-require_once __DIR__ . '/../app/models/Usuario.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 
-$usuario = new Usuario(
-    "João Silva",
-    "joao@email.com",
-    "123456"
-);
+    use App\Models\Cliente;
 
-echo $usuario->getNome();
-echo "<br>";
-echo $usuario->getEmail();
-echo "<br>";
-echo $usuario->getTipo();
+    $cliente = new Cliente("Júlio", 12345678958, "9");
+
+    echo "Autload Funcionando";
+?>
