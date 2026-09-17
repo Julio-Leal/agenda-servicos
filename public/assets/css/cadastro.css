@@ -1,74 +1,4 @@
 /* ========================================
-   RESET
-   ======================================== */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
-
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-button,
-a {
-    cursor: pointer;
-}
-
-button {
-    border: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
-}
-
-
-/* ========================================
    VARIÁVEIS
    ======================================== */
 
@@ -91,7 +21,6 @@ h6 {
     --transition: 0.2s ease;
 }
 
-
 /* ========================================
    LAYOUT
    ======================================== */
@@ -104,7 +33,6 @@ body {
     display: flex;
     min-height: 100vh;
 }
-
 
 /* ========================================
    HERO
@@ -203,7 +131,6 @@ body {
     font-weight: 500;
 }
 
-
 /* ========================================
    LOGIN
    ======================================== */
@@ -224,7 +151,6 @@ body {
     max-width: 420px;
 }
 
-
 /* Cabeçalho */
 
 .login__header {
@@ -243,7 +169,6 @@ body {
 .login__header p {
     color: var(--color-text-light);
 }
-
 
 /* Formulário */
 
@@ -292,7 +217,6 @@ body {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-
 /* Recuperação de senha */
 
 .login__options {
@@ -315,10 +239,9 @@ body {
     color: var(--color-primary-dark);
 }
 
-
 /* Botão */
 
-.login__button {
+.criar-conta__button {
     width: 100%;
     padding: 13px 20px;
 
@@ -333,14 +256,13 @@ body {
                 transform var(--transition);
 }
 
-.login__button:hover {
+.criar-conta__button:hover {
     background-color: var(--color-primary-dark);
 }
 
-.login__button:active {
+.criar-conta__button:active {
     transform: translateY(1px);
 }
-
 
 /* Criar conta */
 
@@ -360,7 +282,6 @@ body {
 .login__register a:hover {
     text-decoration: underline;
 }
-
 
 /* ========================================
    RESPONSIVIDADE
@@ -391,7 +312,6 @@ body {
         padding: 50px 30px;
     }
 }
-
 
 @media (max-width: 500px) {
 
