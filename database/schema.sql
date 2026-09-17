@@ -68,7 +68,7 @@ CREATE TABLE `servico` (
   `PRECO` decimal(10,2) NOT NULL,
   `ATIVO` tinyint(1) NOT NULL DEFAULT 1,
   `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `usuario` (
   `ID` int(11) NOT NULL,
