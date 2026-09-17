@@ -6,7 +6,7 @@
 
     <title>Agenda de Serviços — Login</title>
 
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/public/assets/css/login.css">
 </head>
 
 <body>
