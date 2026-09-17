@@ -1,8 +1,8 @@
-```php
 <?php
 
-class Profissional
-{
+namespace App\Models;
+
+class Profissional {
     private int $id;
     private string $nome;
     private ?string $telefone;

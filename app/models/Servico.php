@@ -1,8 +1,8 @@
-```php
 <?php
 
-class Servico
-{
+namespace App\Models;
+
+class Servico {
     private int $id;
     private string $nome;
     private ?string $descricao;

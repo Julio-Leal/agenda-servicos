@@ -1,8 +1,8 @@
-```php
 <?php
 
-class Agendamento
-{
+namespace App\Models;   
+
+class Agendamento {
     private int $id;
 
     private int $clienteId;
