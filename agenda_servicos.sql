@@ -1,0 +1,129 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 18/09/2026 às 00:38
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+CREATE TABLE `agendamento` (
+  `ID` int(11) NOT NULL,
+  `CLIENTE_ID` int(11) NOT NULL,
+  `PROFISSIONAL_ID` int(11) NOT NULL,
+  `SERVICO_ID` int(11) NOT NULL,
+  `DATA` date NOT NULL,
+  `HORA` time NOT NULL,
+  `STATUS` enum('AGENDADO','CONFIRMADO','CONCLUIDO','CANCELADO') NOT NULL DEFAULT 'AGENDADO',
+  `OBSERVACAO` text DEFAULT NULL,
+  `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(150) NOT NULL,
+  `CPF` char(11) NOT NULL,
+  `TELEFONE` varchar(20) NOT NULL,
+  `EMAIL` varchar(150) DEFAULT NULL,
+  `DATA_NASCIMENTO` date DEFAULT NULL,
+  `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `profissional`
+--
+
+CREATE TABLE `profissional` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(150) NOT NULL,
+  `TELEFONE` varchar(20) DEFAULT NULL,
+  `EMAIL` varchar(150) DEFAULT NULL,
+  `ESPECIALIDADE` varchar(100) DEFAULT NULL,
+  `ATIVO` tinyint(1) NOT NULL DEFAULT 1,
+  `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `servico` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(100) NOT NULL,
+  `DESCRICAO` text DEFAULT NULL,
+  `DURACAO` int(11) NOT NULL,
+  `PRECO` decimal(10,2) NOT NULL,
+  `ATIVO` tinyint(1) NOT NULL DEFAULT 1,
+  `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
+) ;
+
+CREATE TABLE `usuario` (
+  `ID` int(11) NOT NULL,
+  `NOME` varchar(100) NOT NULL,
+  `EMAIL` varchar(150) NOT NULL,
+  `SENHA` varchar(255) NOT NULL,
+  `TIPO` enum('ADMIN','FUNCIONARIO') NOT NULL DEFAULT 'FUNCIONARIO',
+  `CRIADO_EM` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `usuario` (`ID`, `NOME`, `EMAIL`, `SENHA`, `TIPO`, `CRIADO_EM`) VALUES
+(1, 'Administrador', 'admin@agenda.com', '123456', 'ADMIN', '2026-09-12 20:09:13');
+
+ALTER TABLE `agendamento`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `IDX_AGENDAMENTO_CLIENTE` (`CLIENTE_ID`),
+  ADD KEY `IDX_AGENDAMENTO_PROFISSIONAL` (`PROFISSIONAL_ID`),
+  ADD KEY `IDX_AGENDAMENTO_SERVICO` (`SERVICO_ID`),
+  ADD KEY `IDX_AGENDAMENTO_DATA` (`DATA`);
+
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `CPF` (`CPF`);
+
+ALTER TABLE `profissional`
+  ADD PRIMARY KEY (`ID`);
+
+ALTER TABLE `servico`
+  ADD PRIMARY KEY (`ID`);
+
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `EMAIL` (`EMAIL`);
+
+ALTER TABLE `agendamento`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cliente`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `profissional`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `servico`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `usuario`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `agendamento`
+  ADD CONSTRAINT `FK_AGENDAMENTO_CLIENTE` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`ID`),
+  ADD CONSTRAINT `FK_AGENDAMENTO_PROFISSIONAL` FOREIGN KEY (`PROFISSIONAL_ID`) REFERENCES `profissional` (`ID`),
+  ADD CONSTRAINT `FK_AGENDAMENTO_SERVICO` FOREIGN KEY (`SERVICO_ID`) REFERENCES `servico` (`ID`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
