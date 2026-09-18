@@ -27,5 +27,15 @@
 
             return $stmt->execute();
         }
+
+        public function findAll() {
+            $sql = "SELECT ID, NOME, CPF, TELEFONE, EMAIL, DATA_NASCIMENTO, CRIADO_EM 
+                    FROM cliente
+                    ORDER BY NOME";
+                    
+            $stmt = $this->connection->query($sql);
+            
+            return $stmt->fetchAll();
+        }
     }
 ?>
