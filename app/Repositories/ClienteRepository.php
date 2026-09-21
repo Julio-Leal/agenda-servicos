@@ -51,5 +51,27 @@
 
             return $stmt->fetch();
         }
+
+        public function update(Cliente $cliente) {
+            $sql = "UPDATE cliente
+                    SET
+                        NOME = :nome,
+                        CPF = :cpf,
+                        TELEFONE = :telefone,
+                        EMAIL = :email,
+                        DATA_NASCIMENTO = :dataNascimento
+                    WHERE ID = :id";
+
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->bindValue(':nome', $cliente->getNome());
+            $stmt->bindValue(':cpf', $cliente->getCpf());
+            $stmt->bindValue(':telefone', $cliente->getTelefone());
+            $stmt->bindValue(':email', $cliente->getEmail());
+            $stmt->bindValue(':dataNascimento', $cliente->getDataNascimento());
+            $stmt->bindValue(':id', $cliente->getId(), \PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
     }
 ?>
