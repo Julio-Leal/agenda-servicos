@@ -1,33 +1,36 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Models\Cliente;
-use App\Repositories\ClienteRepository;
+    use App\Models\Cliente;
+    use App\Repositories\ClienteRepository;
 
-$repository = new ClienteRepository();
+    $repository = new ClienteRepository();
 
-/* 
-METODO DE CRIACAO FUNCIONANDO!!!!!
+    /* 
+    METODO DE CRIACAO FUNCIONANDO!!!!!
 
-$cliente = new Cliente(
-    'João gomes',
-    '56898654356',
-    '45999999999',
-    'jogaogomees@email.com',
-    '2000-08-05'
-);
+    $cliente = new Cliente(
+        'João gomes',
+        '56898654356',
+        '45999999999',
+        'jogaogomees@email.com',
+        '2000-08-05'
+    );
 
-$resultado = $repository->create($cliente);
+    $resultado = $repository->create($cliente);
 
-if ($resultado) {
-    echo "Cliente cadastrado com sucesso!";
-} */
+    if ($resultado) {
+        echo "Cliente cadastrado com sucesso!";
+    } */
 
-$clientes = $repository->findAll();
+    /* 
+    METODO BUSCAR TODOS FUNCIONANDO!!!
 
-echo '<pre>';
-print_r($clientes);
-echo '</pre>';
+    $clientes = $repository->findAll();
+
+    echo '<pre>';
+    print_r($clientes);
+    echo '</pre>'; */
 
 ?>
