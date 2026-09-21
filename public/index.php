@@ -24,6 +24,10 @@ if ($resultado) {
     echo "Cliente cadastrado com sucesso!";
 } */
 
+$clientes = $repository->findAll();
 
+echo '<pre>';
+print_r($clientes);
+echo '</pre>';
 
 ?>
