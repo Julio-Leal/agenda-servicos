@@ -73,5 +73,16 @@
 
             return $stmt->execute();
         }
+
+        public function delete(int $id) {
+            $sql = "DELETE FROM cliente
+                    WHERE ID = :id";
+
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
     }
 ?>
