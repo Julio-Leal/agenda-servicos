@@ -33,4 +33,14 @@
     print_r($clientes);
     echo '</pre>'; */
 
+/*   
+    Métdo de buscar por ID validado !!!    
+
+    $cliente = $repository->findById(1);
+
+    if($cliente) {
+        echo '<pre>';
+        print_r($cliente);
+        echo '</pre>';
+    } */
 ?>
