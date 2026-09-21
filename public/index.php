@@ -1,11 +1,24 @@
-<?php 
-    //session_start();
+<?php
 
-    require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-    use App\Models\Cliente;
+use App\Models\Cliente;
+use App\Repositories\ClienteRepository;
 
-    $cliente = new Cliente("Júlio", 12345678958, "9");
+$repository = new ClienteRepository();
 
-    echo "Autload Funcionando";
+$cliente = new Cliente(
+    'Cliente Teste',
+    '12345678900',
+    '42999999999',
+    'teste@email.com',
+    '2000-01-01'
+);
+
+$resultado = $repository->create($cliente);
+
+if ($resultado) {
+    echo "Cliente cadastrado com sucesso!";
+}
+
 ?>
