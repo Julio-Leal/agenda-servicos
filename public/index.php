@@ -43,4 +43,20 @@
         print_r($cliente);
         echo '</pre>';
     } */
+
+    $cliente = new Cliente(
+        'Cliente Alterado',
+        '12345678900',
+        '42988888888',
+        'alterado@email.com',
+        '2000-01-01'
+    );
+
+    $cliente->setId(1);
+
+    $resultado = $repository->update($cliente);
+
+    if ($resultado) {
+        echo 'Cliente atualizado com sucesso!';
+    }
 ?>
