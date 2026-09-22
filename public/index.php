@@ -33,7 +33,7 @@
     print_r($clientes);
     echo '</pre>'; */
 
-/*   
+    /*   
     Métdo de buscar por ID validado !!!    
 
     $cliente = $repository->findById(1);
@@ -43,6 +43,10 @@
         print_r($cliente);
         echo '</pre>';
     } */
+
+    /*     
+
+    MÉTODO ATUALIZAR CLIENTE FUNCIONANDO !!!!
 
     $cliente = new Cliente(
         'Cliente Alterado',
@@ -58,5 +62,15 @@
 
     if ($resultado) {
         echo 'Cliente atualizado com sucesso!';
-    }
+    } */
+
+    /*     
+
+    Metodo de exlusao funcionando!
+
+    $resultado = $repository->delete(1);
+
+    if ($resultado) {
+        echo 'Cliente excluído com sucesso!';
+    } */
 ?>
