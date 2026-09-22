@@ -2,75 +2,13 @@
 
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    use App\Models\Cliente;
-    use App\Repositories\ClienteRepository;
+    use App\Controllers\ClienteController;
 
-    $repository = new ClienteRepository();
+    $controller = new ClienteController();
 
-    /* 
-    METODO DE CRIACAO FUNCIONANDO!!!!!
-
-    $cliente = new Cliente(
-        'João gomes',
-        '56898654356',
-        '45999999999',
-        'jogaogomees@email.com',
-        '2000-08-05'
-    );
-
-    $resultado = $repository->create($cliente);
-
-    if ($resultado) {
-        echo "Cliente cadastrado com sucesso!";
-    } */
-
-    /* 
-    METODO BUSCAR TODOS FUNCIONANDO!!!
-
-    $clientes = $repository->findAll();
+    $clientes = $controller->index();
 
     echo '<pre>';
     print_r($clientes);
-    echo '</pre>'; */
-
-    /*   
-    Métdo de buscar por ID validado !!!    
-
-    $cliente = $repository->findById(1);
-
-    if($cliente) {
-        echo '<pre>';
-        print_r($cliente);
-        echo '</pre>';
-    } */
-
-    /*     
-
-    MÉTODO ATUALIZAR CLIENTE FUNCIONANDO !!!!
-
-    $cliente = new Cliente(
-        'Cliente Alterado',
-        '12345678900',
-        '42988888888',
-        'alterado@email.com',
-        '2000-01-01'
-    );
-
-    $cliente->setId(1);
-
-    $resultado = $repository->update($cliente);
-
-    if ($resultado) {
-        echo 'Cliente atualizado com sucesso!';
-    } */
-
-    /*     
-
-    Metodo de exlusao funcionando!
-
-    $resultado = $repository->delete(1);
-
-    if ($resultado) {
-        echo 'Cliente excluído com sucesso!';
-    } */
+    echo '</pre>';
 ?>
