@@ -6,7 +6,7 @@
 
     $controller = new ClienteController();
 
-    $clientes = $controller->index();
+    $clientes = $controller->findAll();
 
     echo '<pre>';
     print_r($clientes);
