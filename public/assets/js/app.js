@@ -54,4 +54,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function atualizarMenuAtivo(pagina) {
+
+        links.forEach(function (link) {
+
+            link.classList.remove('nav-item--active');
+
+        });
+
+        const linkAtivo = document.querySelector(
+            '[data-pagina="' + pagina + '"]'
+        );
+
+        if (linkAtivo) {
+            linkAtivo.classList.add('nav-item--active');
+        }
+
+    }
+
 });
