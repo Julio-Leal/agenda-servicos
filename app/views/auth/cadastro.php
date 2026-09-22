@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Agenda de Serviços — Cadastro</title>
-
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/public/assets/css/reset.css">
+    <link rel="stylesheet" href="/public/assets/css/cadastro.css">
 </head>
 
 <body>
@@ -53,7 +53,7 @@
 
                 <form class="login__form" action="" method="POST">
                     <div class="form-group">
-                        <label for="email">Nome completo <span>*</span></label>
+                        <label for="nome">Nome completo <span>*</span></label>
                         <input
                             type="text"
                             id="nome"
@@ -77,23 +77,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Telefone <span>*</span></label>
+                        <label for="telefone">Telefone <span>*</span></label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
                             placeholder="(11) 99999-9999"
-                            autocomplete="email"
+                            autocomplete="tel"
                             required
                         >
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">Senha <span>*</span></label>
+                        <label for="senha">Senha <span>*</span></label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
+                            id="senha"
+                            name="senha"
                             placeholder="Crie uma senha forte"
                             autocomplete="current-password"
                             required
@@ -101,18 +101,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Confirmar senha <span>*</span></label>
+                        <label for="confirmar-senha">Confirmar senha <span>*</span></label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
+                            id="confirmar-senha"
+                            name="confirmar-senha"
                             placeholder="Repita a senha criada"
-                            autocomplete="current-password"
+                            autocomplete=""
                             required
                         >
                     </div>
 
-                    <button type="submit" class="login__button">
+                    <button type="submit" class="criar-conta__button">
                         Criar conta
                     </button>
 
