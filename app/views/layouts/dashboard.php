@@ -31,7 +31,7 @@
 
             <nav class="sidebar__nav">
 
-                <a href="#" class="nav-item nav-item--active">
+                <a href="#" class="nav-item nav-item--active" data-pagina="dashboard">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <rect x="4" y="4" width="6" height="6" rx="1"></rect>
                         <rect x="14" y="4" width="6" height="6" rx="1"></rect>
@@ -41,7 +41,7 @@
                     <span>Dashboard</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" data-pagina="agenda">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <rect x="4" y="5" width="16" height="15" rx="2"></rect>
                         <path d="M8 3v4M16 3v4M4 10h16"></path>
@@ -49,7 +49,7 @@
                     <span>Agenda</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" data-pagina="servicos">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <rect x="5" y="4" width="14" height="17" rx="2"></rect>
                         <path d="M9 4v3M15 4v3M5 10h14"></path>
@@ -58,17 +58,17 @@
                     <span>Serviços</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" data-pagina="profissionais">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"></path>
                         <circle cx="9.5" cy="7" r="3"></circle>
                         <path d="M17 11a3 3 0 1 0-1-5.83"></path>
                         <path d="M21 20v-1.5a4 4 0 0 0-3-3.87"></path>
                     </svg>
-                    <span>Funcionários</span>
+                    <span>Profissionais</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" data-pagina="clientes">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle cx="12" cy="8" r="3"></circle>
                         <path d="M5 20a7 7 0 0 1 14 0"></path>
@@ -76,7 +76,7 @@
                     <span>Clientes</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" data-pagina="configuracoes">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 1.7-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.4v-.2a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.7-1.7.06-.06A1.7 1.7 0 0 0 8.46 15a1.7 1.7 0 0 0-1.56-1.03H6.7v-2.4h.2A1.7 1.7 0 0 0 8.46 10a1.7 1.7 0 0 0-.34-1.88l-.06-.06 1.7-1.7.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 12.73 5.2V5h2.4v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.7 1.7-.06.06A1.7 1.7 0 0 0 19.4 10c.16.62.72 1.03 1.36 1.03h.2v2.4h-.2A1.7 1.7 0 0 0 19.4 15Z"></path>
