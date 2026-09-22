@@ -105,3 +105,98 @@ a {
     stroke-linejoin: round;
 }
 
+.brand__name {
+    color: var(--dashboard-text);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 44px;
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    color: #526076;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: color var(--dashboard-transition),
+                background-color var(--dashboard-transition);
+}
+
+.nav-item svg {
+    flex: 0 0 auto;
+
+    width: 20px;
+    height: 20px;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-item:hover {
+    color: var(--dashboard-primary);
+    background-color: #f6f7ff;
+}
+
+.nav-item--active {
+    color: var(--dashboard-primary);
+    background-color: var(--dashboard-primary-light);
+    font-weight: 600;
+}
+
+.sidebar__footer {
+    margin-top: auto;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    min-height: 44px;
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    color: #526076;
+    background-color: transparent;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: color var(--dashboard-transition),
+                background-color var(--dashboard-transition);
+}
+
+.logout-button svg {
+    width: 20px;
+    height: 20px;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.logout-button:hover {
+    color: var(--dashboard-primary);
+    background-color: #f6f7ff;
+}
+
+
