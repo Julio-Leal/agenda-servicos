@@ -17,4 +17,41 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     });
+
+    function carregarPagina(pagina) {
+
+        fetch('index.php?pagina=' + pagina)
+            .then(function (response) {
+
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar a página.');
+                }
+
+                return response.text();
+
+            })
+            .then(function (html) {
+
+                conteudo.innerHTML = html;
+
+                atualizarMenuAtivo(pagina);
+
+            })
+            .catch(function (erro) {
+
+                console.error(erro);
+
+                conteudo.innerHTML = `
+                    <div class="content-card">
+                        <div class="empty-state">
+                            <h3>Erro ao carregar a página</h3>
+                            <p>Não foi possível carregar o conteúdo.</p>
+                        </div>
+                    </div>
+                `;
+
+            });
+
+    }
+
 });
