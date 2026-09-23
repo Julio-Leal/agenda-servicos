@@ -37,11 +37,10 @@
                 <label for="data_nascimento">Data de nascimento</label>
                 <input type="date" id="data_nascimento" name="data_nascimento" required>
             </div>
-
-            <div class="form-actions">
-                <button type="button" class="secondary-button" data-pagina="clientes">Cancelar</button>
-                <button type="submit" class="primary-button">Cadastrar cliente</button>
-            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="secondary-button" data-pagina="clientes">Cancelar</button>
+            <button type="submit" class="primary-button">Cadastrar cliente</button>
         </div>
     </form>
 </section>
