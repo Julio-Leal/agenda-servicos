@@ -48,6 +48,44 @@
             $email = trim($_POST['email'] ?? '');
             $dataNascimento = trim($_POST['data_nascimento'] ?? '');
 
+            $erros = [];
+
+            if ($nome === '') {
+                $erros[] = 'O nome é obrigatório.';
+            }
+
+            if ($cpf === '') {
+                $erros[] = 'O CPF é obrigatório.';
+            }
+
+            if ($telefone === '') {
+                $erros[] = 'O telefone é obrigatório.';
+            }
+
+            if ($email === '') {
+                $erros[] = 'O e-mail é obrigatório.';
+            }
+
+            if ($dataNascimento === '') {
+                $erros[] = 'A data de nascimento é obrigatória.';
+            }
+
+            if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $erros[] = 'O e-mail informado é inválido.';
+            }
+
+            if (!empty($erros)) {
+
+                header('Content-Type: application/json');
+
+                echo json_encode([
+                    'sucesso' => false,
+                    'erros' => $erros
+                ]);
+
+                exit;
+            }
+
             $cliente = new Cliente(
                 $nome,
                 $cpf,
@@ -64,7 +102,7 @@
                 'sucesso' => true,
                 'mensagem' => 'Cliente cadastrado com sucesso.'
             ]);
-
+            
             exit;
         }
     }
