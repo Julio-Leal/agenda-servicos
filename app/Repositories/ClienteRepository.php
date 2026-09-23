@@ -52,6 +52,17 @@
             return $stmt->fetch();
         }
 
+        public function findByCpf(string $cpf) {
+            $sql = "SELECT *
+                    FROM cliente
+                    WHERE CPF = :cpf";
+
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':cpf', $cpf);
+            $stmt->execute();
+            return $stmt->fetch();
+        }
+
         public function update(Cliente $cliente) {
             $sql = "UPDATE cliente
                     SET
