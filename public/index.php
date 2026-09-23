@@ -2,13 +2,21 @@
 
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    use App\Controllers\ClienteController;
+    $pagina = $_GET['pagina'] ?? null;
 
-    $controller = new ClienteController();
+    if ($pagina === 'clientes') {
 
-    $clientes = $controller->findAll();
+        require __DIR__ . '/../app/Views/clientes/index.php';
 
-    echo '<pre>';
-    print_r($clientes);
-    echo '</pre>';
+        exit;
+    }
+
+    if ($pagina === 'dashboard') {
+
+        require __DIR__ . '/../app/Views/dashboard/index.php';
+
+        exit;
+    }
+
+    require __DIR__ . '/../app/Views/layouts/dashboard.php';
 ?>
