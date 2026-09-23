@@ -1,21 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    const links = document.querySelectorAll('.nav-item');
-
     const conteudo = document.querySelector('#conteudo');
 
-    links.forEach(function (link) {
+    document.addEventListener('click', function (event) {
 
-        link.addEventListener('click', function (event) {
+        const elemento = event.target.closest('[data-pagina]');
 
-            event.preventDefault();
+        if (!elemento) {
+            return;
+        }
 
-            const pagina = link.dataset.pagina;
+        event.preventDefault();
 
-            carregarPagina(pagina);
+        const pagina = elemento.dataset.pagina;
 
-        });
-
+        carregarPagina(pagina);
     });
 
     function carregarPagina(pagina) {
@@ -28,14 +27,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 return response.text();
-
             })
             .then(function (html) {
 
                 conteudo.innerHTML = html;
 
                 atualizarMenuAtivo(pagina);
-
             })
             .catch(function (erro) {
 
@@ -45,31 +42,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="content-card">
                         <div class="empty-state">
                             <h3>Erro ao carregar a página</h3>
-                            <p>Não foi possível carregar o conteúdo.</p>
+                            <p>
+                                Não foi possível carregar o conteúdo.
+                            </p>
                         </div>
                     </div>
                 `;
-
             });
-
     }
 
     function atualizarMenuAtivo(pagina) {
 
+        const links = document.querySelectorAll('.nav-item');
+
         links.forEach(function (link) {
-
             link.classList.remove('nav-item--active');
-
         });
 
         const linkAtivo = document.querySelector(
-            '[data-pagina="' + pagina + '"]'
+            '.nav-item[data-pagina="' + pagina + '"]'
         );
 
         if (linkAtivo) {
             linkAtivo.classList.add('nav-item--active');
         }
-
     }
 
 });
