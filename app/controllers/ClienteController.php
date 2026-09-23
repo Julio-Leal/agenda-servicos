@@ -74,6 +74,12 @@
                 $erros[] = 'O e-mail informado é inválido.';
             }
 
+            $clienteExistente = $this->repository->findByCpf($cpf);
+
+            if ($clienteExistente) {
+                $erros[] = 'Já existe um cliente cadastrado com este CPF.';
+            }
+
             if (!empty($erros)) {
 
                 header('Content-Type: application/json');
