@@ -16,6 +16,10 @@
                     $controller->index();
                     break;
                 
+                case 'clientes-create':
+                    require __DIR__ . '/../Views/clientes/create.php';
+                    break;
+
                 default: 
                     require __DIR__ . '/../Views/layouts/dashboard.php';
                     break;
