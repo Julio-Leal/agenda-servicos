@@ -5,8 +5,9 @@
     use App\Core\Router;
 
     $pagina = $_GET['pagina'] ?? null;
+    $acao = $_GET['acao'] ?? null;
 
     $router = new Router();
 
-    $router->handle($pagina);
+    $router->handle($pagina, $acao);
 ?>
