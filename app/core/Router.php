@@ -5,7 +5,7 @@
     use App\Controllers\ClienteController;
 
     class Router {
-        public function handle($pagina) {
+        public function handle($pagina, $acao = null) {
             switch($pagina) {
                 case 'dashboard':
                     require __DIR__ . '/../Views/dashboard/index.php';
@@ -13,6 +13,10 @@
 
                 case 'clientes':
                     $controller = new ClienteController();
+                    if($acabou === 'store') {
+                        $controller->store();
+                        break;
+                    }
                     $controller->index();
                     break;
                 
