@@ -42,6 +42,7 @@
                         <th>CPF</th>
                         <th>Telefone</th>
                         <th>E-mail</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,16 @@
                             </td>
                             <td>
                                 <?= htmlspecialchars($cliente['EMAIL']) ?>
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="secondary-button"
+                                    data-pagina="clientes-edit"
+                                    data-id="<?= $cliente['ID'] ?>"
+                                >
+                                    Editar
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
