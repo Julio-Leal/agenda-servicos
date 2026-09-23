@@ -41,6 +41,22 @@
             $email = trim($_POST['email'] ?? '');
             $dataNascimento = trim($_POST['data_nascimento'] ?? '');
 
+            $clienteExistente = $this->repository->findByCpf($cpf);
+
+            if ($clienteExistente && (int) $clienteExistente['ID'] !== $id) {
+
+                header('Content-Type: application/json');
+
+                echo json_encode([
+                    'sucesso' => false,
+                    'erros' => [
+                        'Já existe outro cliente cadastrado com este CPF.'
+                    ]
+                ]);
+
+                exit;
+            }
+
             $cliente = new Cliente(
                 $nome,
                 $cpf,
