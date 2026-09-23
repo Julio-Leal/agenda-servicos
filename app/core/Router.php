@@ -13,7 +13,7 @@
 
                 case 'clientes':
                     $controller = new ClienteController();
-                    if($acabou === 'store') {
+                    if($acao === 'store') {
                         $controller->store();
                         break;
                     }
