@@ -74,14 +74,19 @@
                 $erros[] = 'O e-mail informado é inválido.';
             }
 
-            $clienteExistente = $this->repository->findByCpf($cpf);
+            if ($cpf !== '') {
+                $cpfNumeros = preg_replace('/\D/', '', $cpf);
+                if (strlen($cpfNumeros) !== 11) {
+                    $erros[] = 'O CPF deve possuir 11 dígitos.';
+                }
+            }
 
+            $clienteExistente = $this->repository->findByCpf($cpf);
             if ($clienteExistente) {
                 $erros[] = 'Já existe um cliente cadastrado com este CPF.';
             }
 
             if (!empty($erros)) {
-
                 header('Content-Type: application/json');
 
                 echo json_encode([
