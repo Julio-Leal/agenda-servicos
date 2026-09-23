@@ -11,12 +11,9 @@
 </head>
 
 <body class="dashboard-page">
-
     <div class="dashboard-layout">
-
         <!-- Menu lateral -->
         <aside class="sidebar" aria-label="Menu principal">
-
             <div class="sidebar__brand">
                 <div class="brand__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none">
@@ -25,7 +22,6 @@
                         <path d="M8 13h3M8 17h3M14 13h2M14 17h2"></path>
                     </svg>
                 </div>
-
                 <span class="brand__name">AgendaPro</span>
             </div>
 
@@ -96,9 +92,7 @@
                     <span>Sair</span>
                 </button>
             </div>
-
         </aside>
-
 
         <!-- Área principal -->
         <div class="dashboard-main">
@@ -137,16 +131,13 @@
 
             </header>
 
-
             <!-- Conteúdo que será trocado pela SPA futuramente -->
             <main id="conteudo" class="dashboard-content">
                 <?php
                     require __DIR__ . '/../dashboard/index.php';
                 ?>
             </main>
-
         </div>
-
     </div>
     <script src="assets/js/app.js"></script>
 </body>
