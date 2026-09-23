@@ -90,6 +90,23 @@
                 }
             }            
 
+            if ($dataNascimento !== '') {
+                $data = \DateTime::createFromFormat(
+                    'Y-m-d',
+                    $dataNascimento
+                );
+                $errosData = \DateTime::getLastErrors();
+                if (
+                    !$data ||
+                    ($errosData !== false && (
+                        $errosData['warning_count'] > 0 ||
+                        $errosData['error_count'] > 0
+                    ))
+                ) {
+                    $erros[] = 'A data de nascimento é inválida.';
+                }
+            }
+
             $clienteExistente = $this->repository->findByCpf($cpf);
             if ($clienteExistente) {
                 $erros[] = 'Já existe um cliente cadastrado com este CPF.';
