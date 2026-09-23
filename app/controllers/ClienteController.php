@@ -58,7 +58,13 @@
 
             $this->repository->create($cliente);
 
-            header('Location: index.php?pagina=clientes');
+            header('Content-Type: application/json');
+
+            echo json_encode([
+                'sucesso' => true,
+                'mensagem' => 'Cliente cadastrado com sucesso.'
+            ]);
+
             exit;
         }
     }
