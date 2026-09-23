@@ -26,10 +26,43 @@
             return $cliente;
         }
 
-        public function update(Cliente $cliente) {
+/*         public function update(Cliente $cliente) {
             $resultado = $this->repository->update($cliente);
             return $resultado;
+        } */
+
+        //temp
+        public function update() {
+            $id = (int) ($_POST['id'] ?? 0);
+
+            $nome = trim($_POST['nome'] ?? '');
+            $cpf = trim($_POST['cpf'] ?? '');
+            $telefone = trim($_POST['telefone'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $dataNascimento = trim($_POST['data_nascimento'] ?? '');
+
+            $cliente = new Cliente(
+                $nome,
+                $cpf,
+                $telefone,
+                $email,
+                $dataNascimento
+            );
+
+            $cliente->setId($id);
+
+            $this->repository->update($cliente);
+
+            header('Content-Type: application/json');
+
+            echo json_encode([
+                'sucesso' => true,
+                'mensagem' => 'Cliente atualizado com sucesso.'
+            ]);
+
+            exit;
         }
+        //temp
 
         public function delete(int $id) {
             $resultado = $this->repository->delete($id);
@@ -147,6 +180,17 @@
             ]);
             
             exit;
+        }
+
+        public function edit(int $id) {
+            $cliente = $this->repository->findById($id);
+
+            if (!$cliente) {
+                echo 'Cliente não encontrado.';
+                return;
+            }
+
+            require __DIR__ . '/../Views/clientes/edit.php';
         }
     }
 ?>
