@@ -104,6 +104,8 @@
                     ))
                 ) {
                     $erros[] = 'A data de nascimento é inválida.';
+                } else if ($data && $data > new \DateTime()) {
+                    $erros[] = 'A data de nascimento não pode estar no futuro.';
                 }
             }
 
