@@ -35,5 +35,10 @@
             $resultado = $this->repository->delete($id);
             return $resultado;
         }
+
+        public function index() {
+            $clientes = $this->repository->findAll();
+            require __DIR__ . '/../Views/clientes/index.php';
+        }
     }
 ?>
