@@ -42,11 +42,11 @@
         }
 
         public function store() {
-            $nome = $_POST['nome'];
-            $cpf = $_POST['cpf'];
-            $telefone = $_POST['telefone'];
-            $email = $_POST['email'];
-            $dataNascimento = $_POST['data_nascimento'];
+            $nome = trim($_POST['nome'] ?? '');
+            $cpf = trim($_POST['cpf'] ?? '');
+            $telefone = trim($_POST['telefone'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $dataNascimento = trim($_POST['data_nascimento'] ?? '');
 
             $cliente = new Cliente(
                 $nome,
