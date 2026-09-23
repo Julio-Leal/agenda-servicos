@@ -68,4 +68,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    document.addEventListener('submit', function (event) {
+
+        const formulario = event.target.closest('#form-cliente');
+
+        if (!formulario) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const dados = new FormData(formulario);
+
+        fetch(formulario.action, {
+            method: 'POST',
+            body: dados
+        })
+            .then(function (response) {
+
+                if (!response.ok) {
+                    throw new Error('Erro ao cadastrar cliente.');
+                }
+
+                return response.json();
+            })
+            .then(function (resultado) {
+
+                if (resultado.sucesso) {
+
+                    carregarPagina('clientes');
+
+                } else {
+
+                    alert(resultado.mensagem);
+                }
+            })
+            .catch(function (erro) {
+
+                console.error(erro);
+
+                alert('Não foi possível cadastrar o cliente.');
+            });
+    });
+
 });
