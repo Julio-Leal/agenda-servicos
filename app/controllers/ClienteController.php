@@ -81,6 +81,15 @@
                 }
             }
 
+            if ($telefone !== '') {
+
+                $telefoneNumeros = preg_replace('/\D/', '', $telefone);
+
+                if (strlen($telefoneNumeros) < 10 || strlen($telefoneNumeros) > 11) {
+                    $erros[] = 'O telefone deve possuir 10 ou 11 dígitos.';
+                }
+            }            
+
             $clienteExistente = $this->repository->findByCpf($cpf);
             if ($clienteExistente) {
                 $erros[] = 'Já existe um cliente cadastrado com este CPF.';
