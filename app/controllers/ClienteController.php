@@ -109,9 +109,13 @@
                 }
             }
 
-            $clienteExistente = $this->repository->findByCpf($cpf);
-            if ($clienteExistente) {
-                $erros[] = 'Já existe um cliente cadastrado com este CPF.';
+            if ($cpf !== '') {
+
+                $clienteExistente = $this->repository->findByCpf($cpf);
+
+                if ($clienteExistente) {
+                    $erros[] = 'Já existe um cliente cadastrado com este CPF.';
+                }
             }
 
             if (!empty($erros)) {
