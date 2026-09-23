@@ -13,13 +13,20 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         const pagina = elemento.dataset.pagina;
+        const id = elemento.dataset.id;
 
-        carregarPagina(pagina);
+        carregarPagina(pagina, id);
     });
 
-    function carregarPagina(pagina) {
+    function carregarPagina(pagina, id = null) {
 
-        fetch('index.php?pagina=' + pagina)
+        let url = 'index.php?pagina=' + pagina;
+
+        if (id) {
+            url += '&id=' + id;
+        }
+
+        fetch(url)
             .then(function (response) {
 
                 if (!response.ok) {
