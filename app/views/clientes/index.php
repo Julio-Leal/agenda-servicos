@@ -20,18 +20,49 @@
         </div>
     </div>
 
-    <div class="empty-state">
-        <div class="empty-state__icon" aria-hidden="true">
-
-            <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="8" r="3"></circle>
-
-                <path d="M5 20a7 7 0 0 1 14 0"></path>
-            </svg>
+    <?php if(empty($clientes)): ?>
+        <div class="empty-state">
+            <div class="empty-state__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="3"></circle>
+                    <path d="M5 20a7 7 0 0 1 14 0"></path>
+                </svg>
+            </div>
+            <h3>Nenhum cliente cadastrado</h3>
+            <p>
+                Ainda não existem clientes cadastrados no sistema.
+            </p>
         </div>
-        <h3>Área de clientes</h3>
-        <p>
-            Nesta área vamos exibir os clientes cadastrados no banco de dados.
-        </p>
-    </div>
+    <?php else: ?>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clientes as $cliente): ?>
+                        <tr>
+                            <td>
+                                <?= htmlspecialchars($cliente['NOME']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($cliente['CPF']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($cliente['TELEFONE']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($cliente['EMAIL']) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
 </section>
