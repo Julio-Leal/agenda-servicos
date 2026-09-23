@@ -6,8 +6,8 @@
 
     <title>AgendaPro — Painel</title>
 
-    <link rel="stylesheet" href="/public/assets/css/reset.css">
-    <link rel="stylesheet" href="/public/assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 
 <body class="dashboard-page">
@@ -140,9 +140,9 @@
 
             <!-- Conteúdo que será trocado pela SPA futuramente -->
             <main id="conteudo" class="dashboard-content">
-
-                
-
+                <?php
+                    require __DIR__ . '/../dashboard/index.php';
+                ?>
             </main>
 
         </div>
