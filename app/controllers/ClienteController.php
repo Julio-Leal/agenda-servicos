@@ -40,5 +40,26 @@
             $clientes = $this->repository->findAll();
             require __DIR__ . '/../Views/clientes/index.php';
         }
+
+        public function store() {
+            $nome = $_POST['nome'];
+            $cpf = $_POST['cpf'];
+            $telefone = $_POST['telefone'];
+            $email = $_POST['email'];
+            $dataNascimento = $_POST['data_nascimento'];
+
+            $cliente = new Cliente(
+                $nome,
+                $cpf,
+                $telefone,
+                $email,
+                $dataNascimento
+            );
+
+            $this->repository->create($cliente);
+
+            header('Location: index.php?pagina=clientes');
+            exit;
+        }
     }
 ?>
