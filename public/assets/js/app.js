@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 return response.json();
             })
+
             .then(function (resultado) {
 
                 if (resultado.sucesso) {
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 } else {
 
-                    alert(resultado.mensagem);
+                    alert(resultado.erros.join('\n'));
                 }
             })
             .catch(function (erro) {
