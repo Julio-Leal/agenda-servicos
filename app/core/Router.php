@@ -2,6 +2,8 @@
 
     namespace App\Core;
 
+    use App\Controllers\ClienteController;
+
     class Router {
         public function handle($pagina) {
             switch($pagina) {
@@ -10,7 +12,8 @@
                     break;
 
                 case 'clientes':
-                    require __DIR__ . '/../Views/clientes/index.php';
+                    $controller = new ClienteController();
+                    $controller->index();
                     break;
                 
                 default: 
