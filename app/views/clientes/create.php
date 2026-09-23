@@ -15,7 +15,7 @@
         </p>
     </div>
 
-    <form method="POST" action="index.php?pagina=clientes&acao=store">
+    <form id="form-cliente" method="POST" action="index.php?pagina=clientes&acao=store">
         <div class="form-grid">
             <div class="form-group">
                 <label for="nome">Nome</label>
