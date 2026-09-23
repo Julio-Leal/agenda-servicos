@@ -16,12 +16,21 @@
                     if($acao === 'store') {
                         $controller->store();
                         break;
+                    } else if ($acao === 'update') {
+                        $controller->update();
+                        break;
                     }
                     $controller->index();
                     break;
                 
                 case 'clientes-create':
                     require __DIR__ . '/../Views/clientes/create.php';
+                    break;
+
+                case 'clientes-edit':
+                    $controller = new ClienteController();
+                    $id = (int) ($_GET['id'] ?? 0);
+                    $controller->edit($id);
                     break;
 
                 default: 
