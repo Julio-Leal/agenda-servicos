@@ -5,7 +5,7 @@
             Gerencie os clientes cadastrados no estabelecimento.
         </p>
     </div>
-    <button type="button" class="primary-button">
+    <button type="button" class="primary-button" data-pagina="clientes-create">
         + Novo cliente
     </button>
 </header>
@@ -15,7 +15,7 @@
         <div>
             <h2>Clientes cadastrados</h2>
             <p>
-                Lista de clientes do sistema.
+                Lista de clientes do sistema. 
             </p>
         </div>
     </div>
