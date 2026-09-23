@@ -2,7 +2,7 @@
     namespace App\Repositories;
 
     use App\Core\Database;
-    use App\Models\CLiente;
+    use App\Models\Cliente;
 
     class ClienteRepository {
         private $connection;
