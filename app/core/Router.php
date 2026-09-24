@@ -40,7 +40,30 @@
                 
                 case 'servicos':
                     $controller = new ServicoController();
+
+                    if ($acao === 'store') {
+                        $controller->store();
+                        break;
+                    }
+
+                    if ($acao === 'update') {
+                        $controller->update();
+                        break;
+                    }
+
                     $controller->index();
+                    break;
+
+                case 'servicos-create':
+                    require __DIR__ . '/../Views/servicos/create.php';
+                    break;
+
+                case 'servicos-edit':
+                    $controller = new ServicoController();
+
+                    $id = (int) ($_GET['id'] ?? 0);
+
+                    $controller->edit($id);
                     break;
                 
                 default: 
