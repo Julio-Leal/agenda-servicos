@@ -3,6 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const conteudo = document.querySelector('#conteudo');
 
     document.addEventListener('click', function (event) {
+        const acao = event.target.closest('[data-acao]');
+
+        if (acao && acao.dataset.acao === 'excluir-cliente') {
+
+            const id = acao.dataset.id;
+
+            const confirmar = confirm(
+                'Tem certeza que deseja excluir este cliente?'
+            );
+
+            if (!confirmar) {
+                return;
+            }
+
+            console.log('Excluir cliente:', id);
+
+            return;
+        } //23-09-2026 21:52
 
         const elemento = event.target.closest('[data-pagina]');
 
