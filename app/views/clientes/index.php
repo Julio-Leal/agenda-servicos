@@ -69,6 +69,15 @@
                                 >
                                     Editar
                                 </button>
+                                
+                                <button
+                                    type="button"
+                                    class="secondary-button"
+                                    data-acao="excluir-cliente"
+                                    data-id="<?= $cliente['ID'] ?>"
+                                >
+                                    Excluir
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
