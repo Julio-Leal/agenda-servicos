@@ -30,6 +30,11 @@ class Profissional {
         return $this->id ?? null;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getNome(): string
     {
         return $this->nome;
