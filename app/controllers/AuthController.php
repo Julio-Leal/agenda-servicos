@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Usuario;
 use App\Repositories\UsuarioRepository;
 
 class AuthController
@@ -11,12 +10,18 @@ class AuthController
 
     public function __construct()
     {
-        $this->repository = new UsuarioRepository();
+        $this->repository = null;
     }
 
     public function login()
     {
+        if (isset($_SESSION['usuario_id'])) {
+            header('Location: index.php');
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $erros = [];
             require __DIR__ . '/../Views/auth/login.php';
             return;
         }
@@ -28,6 +33,8 @@ class AuthController
 
         if ($email === '') {
             $erros[] = 'O e-mail é obrigatório.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $erros[] = 'Informe um e-mail válido.';
         }
 
         if ($senha === '') {
@@ -38,6 +45,8 @@ class AuthController
             require __DIR__ . '/../Views/auth/login.php';
             return;
         }
+
+        $this->repository = new UsuarioRepository();
 
         $usuario = $this->repository->findByEmail($email);
 
@@ -55,7 +64,7 @@ class AuthController
         $_SESSION['usuario_email'] = $usuario['EMAIL'];
         $_SESSION['usuario_tipo'] = $usuario['TIPO'];
 
-        header('Location: index.php?pagina=dashboard');
+        header('Location: index.php');
         exit;
     }
 
