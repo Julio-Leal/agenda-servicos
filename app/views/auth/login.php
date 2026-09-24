@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Agenda de Serviços — Login</title>
-    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 
 </head>
 
@@ -13,7 +13,6 @@
 
     <main class="login-page">
 
-        <!-- Apresentação -->
         <section class="hero" aria-label="Apresentação">
             <div class="hero__content">
 
@@ -40,9 +39,6 @@
 
             </div>
         </section>
-
-
-        <!-- Login -->
         <section class="login" aria-label="Área de login">
             <div class="login__content">
 
@@ -51,7 +47,19 @@
                     <p>Entre na sua conta para continuar.</p>
                 </header>
 
-                <form class="login__form" action="" method="POST">
+                <?php if (!empty($erros)): ?>
+                    <div class="login__error" role="alert">
+                        <?php foreach ($erros as $erro): ?>
+                            <p><?= htmlspecialchars($erro) ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form
+                    class="login__form"
+                    action="index.php?pagina=login"
+                    method="POST"
+                >
 
                     <div class="form-group">
                         <label for="email">E-mail</label>
@@ -59,6 +67,7 @@
                             type="email"
                             id="email"
                             name="email"
+                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
                             placeholder="Digite seu e-mail"
                             autocomplete="email"
                             required
@@ -66,11 +75,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Senha</label>
+                        <label for="senha">Senha</label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
+                            id="senha"
+                            name="senha"
                             placeholder="Digite sua senha"
                             autocomplete="current-password"
                             required
@@ -96,6 +105,6 @@
         </section>
 
     </main>
-    
+
 </body>
 </html>
