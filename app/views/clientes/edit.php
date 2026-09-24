@@ -1,5 +1,6 @@
 <form
     id="form-cliente"
+    data-pagina-retorno="clientes"
     method="POST"
     action="index.php?pagina=clientes&acao=update"
 >

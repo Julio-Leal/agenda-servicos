@@ -15,7 +15,12 @@
         </p>
     </div>
 
-    <form id="form-cliente" method="POST" action="index.php?pagina=clientes&acao=store">
+    <form
+        id="form-cliente"
+        data-pagina-retorno="clientes"
+        method="POST"
+        action="index.php?pagina=clientes&acao=store"
+    >
         <div class="form-grid">
             <div class="form-group">
                 <label for="nome">Nome</label>

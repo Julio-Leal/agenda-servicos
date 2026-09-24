@@ -143,11 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (resultado.sucesso) {
 
-                    carregarPagina(
-                        formulario.id === 'form-servico'
-                            ? 'servicos'
-                            : 'clientes'
-                    );
+                    carregarPagina(formulario.dataset.paginaRetorno);
 
                 } else {
 

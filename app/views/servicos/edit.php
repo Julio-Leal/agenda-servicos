@@ -11,6 +11,7 @@
 
     <form
         id="form-servico"
+        data-pagina-retorno="servicos"
         method="POST"
         action="index.php?pagina=servicos&acao=update"
     >
