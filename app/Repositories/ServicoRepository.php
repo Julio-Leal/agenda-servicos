@@ -27,5 +27,26 @@
 
             return $stmt->execute();
         }
+
+        public function findAll() {
+            $sql = "SELECT *
+                    FROM servico
+                    ORDER BY ID";
+            
+            $stmt =  $this->connection->query($sql);
+
+            return $stmt->fetchAll();
+        }
+
+        public function findById(int $id) {
+            $sql = "SELECT *
+                    FROM cliente
+                    WHERE ID = :id";
+            
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+        }
     }
 ?>
