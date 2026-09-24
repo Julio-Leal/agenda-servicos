@@ -79,7 +79,7 @@
                     </svg>
                     <span>Configurações</span>
                 </a>
-
+                
             </nav>
 
             <div class="sidebar__footer">
