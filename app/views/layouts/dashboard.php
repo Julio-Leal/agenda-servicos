@@ -140,6 +140,7 @@
         </div>
     </div>
     <!-- <script src="assets/js/app.js"></script> -->
-    <script src="assets/js/app.js?v=2"></script>
+    <!-- <script src="assets/js/app.js?v=2"></script> -->
+     <script src="assets/js/app.js?v=3"></script>
 </body>
 </html>
