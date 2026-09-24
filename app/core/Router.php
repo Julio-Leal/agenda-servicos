@@ -19,6 +19,10 @@
                     } else if ($acao === 'update') {
                         $controller->update();
                         break;
+                    } else if ($acao === 'delete') {
+                        $id = (int) ($_GET['id'] ?? 0);
+                        $controller->delete($id);
+                        break;
                     }
                     $controller->index();
                     break;
