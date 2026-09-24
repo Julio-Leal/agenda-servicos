@@ -6,6 +6,13 @@
             Gerencie os serviços cadastrados no estabelecimento.
         </p>
     </div>
+    <button
+        type="button"
+        class="primary-button"
+        data-pagina="servicos-create"
+    >
+        + Novo serviço
+    </button>
 </header>
 
 <section class="content-card">
@@ -45,6 +52,7 @@
                         <th>Duração</th>
                         <th>Preço</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -79,6 +87,17 @@
                                 <?= $servico['ATIVO'] ? 'Ativo' : 'Inativo' ?>
                             </td>
 
+                            <td>
+                                <button
+                                    type="button"
+                                    class="secondary-button"
+                                    data-pagina="servicos-edit"
+                                    data-id="<?= $servico['ID'] ?>"
+                                >
+                                    Editar
+                                </button>
+
+                            </td>
                         </tr>
 
                     <?php endforeach; ?>
