@@ -37,19 +37,6 @@
 
             $servicoExistente = $this->repository->findbyId($id);
 
-            if($servicoExistente && (int) $servicoExistente['ID' !==$id]) {
-                header('Content-Type: application/json');
-
-                echo json_encode([
-                    'sucesso' => false, 
-                    'erros' => [
-                        'Ja existe outro servico cadastrado com este id.'
-                    ]
-                ]);
-
-                exit;
-            }
-
             $servico = new Servico(
                 $nome, 
                 $duracao,
@@ -80,7 +67,7 @@
         public function store() {
             $nome = trim($_POST['nome'] ?? '');
             $duracao = trim($_POST['duracao'] ?? '');
-            $preco = trim($_POST['emprecoil'] ?? '');
+            $preco = trim($_POST['preco'] ?? '');
             $descricao = trim($_POST['descricao'] ?? '');
             $ativo = trim($_POST['ativo'] ?? '');
 
