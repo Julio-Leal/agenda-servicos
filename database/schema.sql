@@ -80,7 +80,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `usuario` (`ID`, `NOME`, `EMAIL`, `SENHA`, `TIPO`, `CRIADO_EM`) VALUES
-(1, 'Administrador', 'admin@agenda.com', '123456', 'ADMIN', '2026-09-12 20:09:13');
+(1, 'Administrador', 'admin@agenda.com', '$2y$12$DOWa7SIa9UOuxlJupQb93ecoMXXYEiwU4A.RDH6QuREiZifQ9GSDS', 'ADMIN', '2026-09-12 20:09:13');
 
 ALTER TABLE `agendamento`
   ADD PRIMARY KEY (`ID`),
