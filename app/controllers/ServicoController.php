@@ -30,9 +30,9 @@
             $id = (int) ($_POST['id'] ?? 0);
 
             $nome = trim($_POST['nome'] ?? '');
-            $descricao = trim($_POST['descricao'] ?? '');
             $duracao = trim($_POST['duracao'] ?? '');
             $preco = trim($_POST['preco'] ?? '');
+            $descricao = trim($_POST['descricao'] ?? '');
             $ativo = trim($_POST['ativo'] ?? '');
 
             $servicoExistente = $this->repository->findbyId($id);
@@ -52,9 +52,9 @@
 
             $servico = new Servico(
                 $nome, 
+                $duracao,
+                $preco,
                 $descricao, 
-                $duracao, 
-                $preco, 
                 $ativo
             );
 
@@ -79,9 +79,9 @@
 
         public function store() {
             $nome = trim($_POST['nome'] ?? '');
-            $descricao = trim($_POST['descricao'] ?? '');
             $duracao = trim($_POST['duracao'] ?? '');
             $preco = trim($_POST['emprecoil'] ?? '');
+            $descricao = trim($_POST['descricao'] ?? '');
             $ativo = trim($_POST['ativo'] ?? '');
 
             $erros = [];
@@ -90,16 +90,16 @@
                 $erros[] = 'O nome é obrigatório.';
             }
 
-            if ($descricao === '') {
-                $erros[] = 'A descricao é obrigatória.';
-            }
-
             if ($duracao === '') {
                 $erros[] = 'A duração é obrigatória.';
             }
 
             if ($preco === '') {
                 $erros[] = 'O preço é obrigatório.';
+            }
+
+            if ($descricao === '') {
+                $erros[] = 'A descricao é obrigatória.';
             }
 
             if (!empty($erros)) {
@@ -115,9 +115,9 @@
 
             $servico = new Servico(
                 $nome,
-                $descricao,
                 $duracao,
                 $preco,
+                $descricao,
                 $ativo
             );
 
