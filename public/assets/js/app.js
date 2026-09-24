@@ -17,10 +17,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            console.log('Excluir cliente:', id);
+            fetch(
+                'index.php?pagina=clientes&acao=delete&id=' + id
+            )
+                .then(function (response) {
+
+                    if (!response.ok) {
+                        throw new Error('Erro ao excluir cliente.');
+                    }
+
+                    return response.text();
+                })
+                .then(function () {
+
+                    carregarPagina('clientes');
+                })
+                .catch(function (erro) {
+
+                    console.error(erro);
+
+                    alert('Não foi possível excluir o cliente.');
+                });
 
             return;
-        } //23-09-2026 21:52
+        }
 
         const elemento = event.target.closest('[data-pagina]');
 
