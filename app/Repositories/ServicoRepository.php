@@ -1,0 +1,31 @@
+<?php 
+    namespace App\Repositories;
+
+    use App\Core\Database;
+    use App\MOdels\Servico;
+
+    class ServicoRepository {
+        private $connection;
+
+        public function __construct() {
+            $database = new DataBase();
+            $this->connection = $database->getConnection();
+        }
+
+        public function create(Servico $servico) {
+            $sql = "INSERT INTO servico
+                    (NOME, DESCRICAO, DURACAO, PRECO, ATIVO)
+                    VALUES (:nome, :descricao, :duracao, :preco, :ativo)";
+            
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->bindValue(':nome', $servico->getNome());
+            $stmt->bindValue(':descricao', $servico->getDescricao());
+            $stmt->bindValue(':duracao', $servico->getDuracao());
+            $stmt->bindValue(':preco', $servico->getPreco());
+            $stmt->bindValue(':ativo', $servico->isAtivo());
+
+            return $stmt->execute();
+        }
+    }
+?>
