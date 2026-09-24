@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('submit', function (event) {
 
         const formulario = event.target.closest(
-            '#form-cliente, #form-servico'
+            '#form-cliente, #form-servico, #form-profissional'
         );
 
         if (!formulario) {
