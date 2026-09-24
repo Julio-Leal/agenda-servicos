@@ -115,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('submit', function (event) {
 
-        const formulario = event.target.closest('#form-cliente');
+        const formulario = event.target.closest(
+            '#form-cliente, #form-servico'
+        );
 
         if (!formulario) {
             return;
@@ -153,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 console.error(erro);
 
-                alert('Não foi possível cadastrar o cliente.');
+                alert('Não foi possível salvar os dados.');
             });
     });
 
