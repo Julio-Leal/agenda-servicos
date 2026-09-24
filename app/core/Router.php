@@ -3,6 +3,7 @@
     namespace App\Core;
 
     use App\Controllers\ClienteController;
+    use App\Controllers\ServicoController;
 
     class Router {
         public function handle($pagina, $acao = null) {
@@ -36,7 +37,12 @@
                     $id = (int) ($_GET['id'] ?? 0);
                     $controller->edit($id);
                     break;
-
+                
+                case 'servicos':
+                    $controller = new ServicoController();
+                    $controller->index();
+                    break;
+                
                 default: 
                     require __DIR__ . '/../Views/layouts/dashboard.php';
                     break;
