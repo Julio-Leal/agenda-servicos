@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-class Usuario {
-    private int $id;
+class Usuario
+{
+    private ?int $id;
     private string $nome;
     private string $email;
     private string $senha;
     private string $tipo;
-    private string $criadoEm;
+    private ?string $criadoEm;
 
     public function __construct(
         string $nome,
@@ -16,15 +17,22 @@ class Usuario {
         string $senha,
         string $tipo = 'FUNCIONARIO'
     ) {
+        $this->id = null;
         $this->nome = $nome;
         $this->email = $email;
         $this->senha = $senha;
         $this->tipo = $tipo;
+        $this->criadoEm = null;
     }
 
     public function getId(): ?int
     {
-        return $this->id ?? null;
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getNome(): string
@@ -69,6 +77,6 @@ class Usuario {
 
     public function getCriadoEm(): ?string
     {
-        return $this->criadoEm ?? null;
+        return $this->criadoEm;
     }
 }
