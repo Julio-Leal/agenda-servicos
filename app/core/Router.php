@@ -1,76 +1,140 @@
-<?php 
+<?php
 
-    namespace App\Core;
+namespace App\Core;
 
-    use App\Controllers\ClienteController;
-    use App\Controllers\ServicoController;
+use App\Controllers\AuthController;
+use App\Controllers\ClienteController;
+use App\Controllers\ServicoController;
 
-    class Router {
-        public function handle($pagina, $acao = null) {
-            switch($pagina) {
-                case 'dashboard':
-                    require __DIR__ . '/../Views/dashboard/index.php';
+class Router
+{
+    public function handle($pagina, $acao = null)
+    {
+        switch ($pagina) {
+
+            case 'login':
+
+                $controller = new AuthController();
+                $controller->login();
+
+                break;
+
+            case 'logout':
+
+                $controller = new AuthController();
+                $controller->logout();
+
+                break;
+
+            case 'dashboard':
+
+                $this->verificarLogin();
+
+                require __DIR__ . '/../Views/dashboard/index.php';
+
+                break;
+
+            case 'clientes':
+
+                $this->verificarLogin();
+
+                $controller = new ClienteController();
+
+                if ($acao === 'store') {
+                    $controller->store();
                     break;
+                }
 
-                case 'clientes':
-                    $controller = new ClienteController();
-                    if($acao === 'store') {
-                        $controller->store();
-                        break;
-                    } else if ($acao === 'update') {
-                        $controller->update();
-                        break;
-                    } else if ($acao === 'delete') {
-                        $id = (int) ($_GET['id'] ?? 0);
-                        $controller->delete($id);
-                        break;
-                    }
-                    $controller->index();
+                if ($acao === 'update') {
+                    $controller->update();
                     break;
-                
-                case 'clientes-create':
-                    require __DIR__ . '/../Views/clientes/create.php';
-                    break;
+                }
 
-                case 'clientes-edit':
-                    $controller = new ClienteController();
-                    $id = (int) ($_GET['id'] ?? 0);
-                    $controller->edit($id);
-                    break;
-                
-                case 'servicos':
-                    $controller = new ServicoController();
-
-                    if ($acao === 'store') {
-                        $controller->store();
-                        break;
-                    }
-
-                    if ($acao === 'update') {
-                        $controller->update();
-                        break;
-                    }
-
-                    $controller->index();
-                    break;
-
-                case 'servicos-create':
-                    require __DIR__ . '/../Views/servicos/create.php';
-                    break;
-
-                case 'servicos-edit':
-                    $controller = new ServicoController();
-
+                if ($acao === 'delete') {
                     $id = (int) ($_GET['id'] ?? 0);
 
-                    $controller->edit($id);
+                    $controller->delete($id);
+
                     break;
-                
-                default: 
-                    require __DIR__ . '/../Views/layouts/dashboard.php';
+                }
+
+                $controller->index();
+
+                break;
+
+            case 'clientes-create':
+
+                $this->verificarLogin();
+
+                require __DIR__ . '/../Views/clientes/create.php';
+
+                break;
+
+            case 'clientes-edit':
+
+                $this->verificarLogin();
+
+                $controller = new ClienteController();
+
+                $id = (int) ($_GET['id'] ?? 0);
+
+                $controller->edit($id);
+
+                break;
+
+            case 'servicos':
+
+                $this->verificarLogin();
+
+                $controller = new ServicoController();
+
+                if ($acao === 'store') {
+                    $controller->store();
                     break;
-            }
-        }   
+                }
+
+                if ($acao === 'update') {
+                    $controller->update();
+                    break;
+                }
+
+                $controller->index();
+
+                break;
+
+            case 'servicos-create':
+
+                $this->verificarLogin();
+
+                require __DIR__ . '/../Views/servicos/create.php';
+
+                break;
+
+            case 'servicos-edit':
+
+                $this->verificarLogin();
+
+                $controller = new ServicoController();
+
+                $id = (int) ($_GET['id'] ?? 0);
+
+                $controller->edit($id);
+
+                break;
+
+            default:
+
+                require __DIR__ . '/../Views/auth/login.php';
+
+                break;
+        }
     }
 
-?>
+    private function verificarLogin()
+    {
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: index.php?pagina=login');
+            exit;
+        }
+    }
+}
