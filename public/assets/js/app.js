@@ -134,17 +134,20 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(function (response) {
 
                 if (!response.ok) {
-                    throw new Error('Erro ao cadastrar cliente.');
+                    throw new Error('Erro ao salvar os dados.');
                 }
 
                 return response.json();
             })
-
             .then(function (resultado) {
 
                 if (resultado.sucesso) {
 
-                    carregarPagina('clientes');
+                    carregarPagina(
+                        formulario.id === 'form-servico'
+                            ? 'servicos'
+                            : 'clientes'
+                    );
 
                 } else {
 
