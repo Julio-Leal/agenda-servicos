@@ -83,14 +83,14 @@
             </nav>
 
             <div class="sidebar__footer">
-                <button type="button" class="logout-button">
+                <a href="index.php?pagina=logout" class="logout-button">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M10 17l5-5-5-5"></path>
                         <path d="M15 12H3"></path>
                         <path d="M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"></path>
                     </svg>
                     <span>Sair</span>
-                </button>
+                </a>
             </div>
         </aside>
 
@@ -121,11 +121,28 @@
                         </svg>
                     </button>
 
-                    <div class="user-avatar" aria-hidden="true">CS</div>
+                    <?php
+                        $nomeUsuario = $_SESSION['usuario_nome'] ?? 'Usuário';
+                        $tipoUsuario = $_SESSION['usuario_tipo'] ?? 'FUNCIONARIO';
+                        $iniciais = '';
+                        $partesNome = preg_split('/\s+/', trim($nomeUsuario));
+
+                        if (!empty($partesNome[0])) {
+                            $iniciais .= strtoupper(substr($partesNome[0], 0, 1));
+                        }
+
+                        if (count($partesNome) > 1) {
+                            $iniciais .= strtoupper(substr($partesNome[count($partesNome) - 1], 0, 1));
+                        }
+                    ?>
+
+                    <div class="user-avatar" aria-hidden="true">
+                        <?= htmlspecialchars($iniciais) ?>
+                    </div>
 
                     <div class="user-info">
-                        <strong>Clínica Solis</strong>
-                        <span>Administrador</span>
+                        <strong><?= htmlspecialchars($nomeUsuario) ?></strong>
+                        <span><?= htmlspecialchars($tipoUsuario) ?></span>
                     </div>
                 </div>
 
