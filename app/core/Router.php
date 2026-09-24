@@ -5,6 +5,7 @@ namespace App\Core;
 use App\Controllers\AuthController;
 use App\Controllers\ClienteController;
 use App\Controllers\ServicoController;
+use App\Controllers\ProfissionalController;
 
 class Router
 {
@@ -109,6 +110,46 @@ class Router
                 $this->verificarLogin();
 
                 require __DIR__ . '/../Views/servicos/create.php';
+
+                break;
+
+            case 'profissionais':
+
+                $this->verificarLogin();
+
+                $controller = new ProfissionalController();
+
+                if ($acao === 'store') {
+                    $controller->store();
+                    break;
+                }
+
+                if ($acao === 'update') {
+                    $controller->update();
+                    break;
+                }
+
+                $controller->index();
+
+                break;
+
+            case 'profissionais-create':
+
+                $this->verificarLogin();
+
+                require __DIR__ . '/../Views/profissionais/create.php';
+
+                break;
+
+            case 'profissionais-edit':
+
+                $this->verificarLogin();
+
+                $controller = new ProfissionalController();
+
+                $id = (int) ($_GET['id'] ?? 0);
+
+                $controller->edit($id);
 
                 break;
 
