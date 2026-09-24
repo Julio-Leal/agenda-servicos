@@ -21,6 +21,8 @@ class Router
 
             case 'logout':
 
+                $this->verificarLogin();
+
                 $controller = new AuthController();
                 $controller->logout();
 
@@ -124,7 +126,12 @@ class Router
 
             default:
 
-                require __DIR__ . '/../Views/auth/login.php';
+                if (isset($_SESSION['usuario_id'])) {
+                    require __DIR__ . '/../Views/layouts/dashboard.php';
+                } else {
+                    $erros = [];
+                    require __DIR__ . '/../Views/auth/login.php';
+                }
 
                 break;
         }
