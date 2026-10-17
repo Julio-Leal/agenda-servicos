@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/agenda.css">
 </head>
 
 <body class="dashboard-page">
