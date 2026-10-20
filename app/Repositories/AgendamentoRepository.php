@@ -14,7 +14,7 @@
 
         public function create(Agendamento $agendamento) {
             $sql = "INSERT INTO agendamento
-                    (CLIENTE_ID, PROFISSIONAL_ID, SERVICO_ID, DATA, HORA, STATUS, OBERVACAO)
+                    (CLIENTE_ID, PROFISSIONAL_ID, SERVICO_ID, DATA, HORA, STATUS, OBSERVACAO)
                     VALUES (:clienteId, :profissionalId, :servicoId, :data, :hora, :status, :observacao)";
             
             $stmt = $this->connection->prepare($sql);
