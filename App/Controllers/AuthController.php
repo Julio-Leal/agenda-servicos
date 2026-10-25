@@ -68,6 +68,10 @@ class AuthController
         exit;
     }
 
+    public function cadastro() {
+        //implementar
+    }
+
     public function logout()
     {
         $_SESSION = [];
