@@ -19,7 +19,13 @@ class Router
                 $controller->login();
 
                 break;
-
+            
+            case 'cadastro':
+                $controller = new AuthController();
+                $controller->cadastro();
+                
+                break;
+            
             case 'logout':
 
                 $this->verificarLogin();
