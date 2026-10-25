@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Agenda de Serviços — Cadastro</title>
-    <link rel="stylesheet" href="/public/assets/css/reset.css">
-    <link rel="stylesheet" href="/public/assets/css/cadastro.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/cadastro.css">
 </head>
 
 <body>
