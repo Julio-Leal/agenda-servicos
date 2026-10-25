@@ -96,7 +96,7 @@
 
                     <p class="login__register">
                         Não tem uma conta?
-                        <a href="#">Criar conta</a>
+                        <a href="index.php?pagina=cadastro">Criar conta</a>
                     </p>
 
                 </form>
