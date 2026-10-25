@@ -80,6 +80,7 @@
                         >
                     </div>
 
+<!--                     
                     <div class="form-group">
                         <label for="telefone">Telefone <span>*</span></label>
                         <input
@@ -90,7 +91,8 @@
                             autocomplete="tel"
                             required
                         >
-                    </div>
+                    </div> 
+-->
                     
                     <div class="form-group">
                         <label for="senha">Senha <span>*</span></label>
@@ -109,9 +111,9 @@
                         <input
                             type="password"
                             id="confirmar-senha"
-                            name="confirmar-senha"
+                            name="confirmar_senha"
                             placeholder="Repita a senha criada"
-                            autocomplete=""
+                            autocomplete="new-password"
                             required
                         >
                     </div>
