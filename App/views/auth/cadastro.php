@@ -51,7 +51,11 @@
                     <p>Comece a gerenciar sua agenda em poucos minutos.</p>
                 </header>
 
-                <form class="login__form" action="" method="POST">
+                <form 
+                    class="login__form" 
+                    action="index.php?pagina=cadastro" 
+                    method="POST"
+                >
                     <div class="form-group">
                         <label for="nome">Nome completo <span>*</span></label>
                         <input
