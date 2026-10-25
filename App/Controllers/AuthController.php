@@ -98,8 +98,8 @@ class AuthController
             $erros[] = 'Informe um e-mail válido.';
         }
 
-        if (strlen($senha) < 8) {
-            $erros[] = 'A senha deve ter pelo menos 8 caracteres.';
+        if (strlen($senha) < 6) {
+            $erros[] = 'A senha deve ter pelo menos 6 caracteres.';
         }
 
         if ($senha !== $confirmarSenha) {
