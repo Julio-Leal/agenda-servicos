@@ -80,7 +80,7 @@
                             <path d="M5 20a7 7 0 0 1 14 0"></path>
                         </svg>
                         <span>Usuários</span>
-                        <span title="Disponível apenas para ADM">???</span>
+                        <span title="Disponível apenas para ADM">(Adm olny)</span>
                     </a>
                 <?php endif; ?>
 
