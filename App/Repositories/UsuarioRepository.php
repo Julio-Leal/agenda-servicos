@@ -31,6 +31,42 @@ class UsuarioRepository
         return $stmt->execute();
     }
 
+    
+    public function findById(int $id)
+    {
+        $sql = "SELECT *
+                FROM usuario
+                WHERE ID = :id";
+
+        $stmt = $this->connection->prepare($sql);   
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    public function update(Usuario $usuario)
+    {
+        $sql = "UPDATE usuario
+                SET
+                    NOME = :nome,
+                    EMAIL = :email,
+                    SENHA = :senha,
+                    TIPO = :tipo
+                WHERE ID = :id";
+
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindValue(':nome', $usuario->getNome());
+        $stmt->bindValue(':email', $usuario->getEmail());
+        $stmt->bindValue(':senha', $usuario->getSenha());
+        $stmt->bindValue(':tipo', $usuario->getTipo());
+        $stmt->bindValue(':id', $usuario->getId(), \PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+
     public function findByEmail(string $email)
     {
         $sql = "SELECT *
@@ -47,7 +83,7 @@ class UsuarioRepository
     }
 
     public function findAll() {
-        $sql = "SELECT NOME, TIPO, CRIADO_EM 
+        $sql = "SELECT ID, NOME, EMAIL, TIPO, CRIADO_EM 
                 FROM usuario
                 ORDER BY NOME";
                 
