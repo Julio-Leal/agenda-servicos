@@ -37,6 +37,7 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>E-mail</th>
                         <th>Tipo</th>
                         <th>Açoes</th>
                     </tr>
@@ -46,6 +47,9 @@
                         <tr>
                             <td>
                                 <?= htmlspecialchars($usuario['NOME']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($usuario['EMAIL']) ?>
                             </td>
                             <td>
                                 <?= htmlspecialchars($usuario['TIPO']) ?>
