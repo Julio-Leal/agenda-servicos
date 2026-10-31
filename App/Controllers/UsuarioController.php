@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Controllers;
 
 use App\Repositories\UsuarioRepository;
@@ -11,33 +12,43 @@ class UsuarioController {
         $this->repository = new UsuarioRepository();
     }
 
+    private function verificarAdmin(): void {
+        if (
+            !isset($_SESSION['usuario_id']) ||
+            ($_SESSION['usuario_tipo'] ?? '') !== 'ADMIN'
+        ) {
+            http_response_code(403);
+            exit('Acesso negado.');
+        }
+    }
+
+    private function responder(array $dados): void {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($dados);
+        exit;
+    }
+
     public function index() {
+        $this->verificarAdmin();
+
         $usuarios = $this->repository->findAll();
+
         require __DIR__ . '/../Views/usuarios/index.php';
     }
 
     public function store() {
-        //Verifica se o usuaário já possui uma sessão
-        if (isset($_SESSION['usuario_id'])) {
-            exit;
-        }
+        $this->verificarAdmin();
 
-        $erros = [];
-
-        // Se for GET, apenas mostra o formulário.
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return;
-        }
-
-        // Recebe os dados do formulário.
         $nome = trim($_POST['nome'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $senha = $_POST['senha'] ?? '';
         $confirmarSenha = $_POST['confirmar_senha'] ?? '';
+        $tipo = $_POST['tipo'] ?? '';
 
-        // Validações no servidor.
+        $erros = [];
+
         if ($nome === '' || mb_strlen($nome) > 100) {
-            $erros[] = 'Informe um nome válido de até 100 caracteres.';
+            $erros[] = 'Informe um nome válido.';
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $erros[] = 'Informe um e-mail válido.';
@@ -48,43 +59,134 @@ class UsuarioController {
         if ($senha !== $confirmarSenha) {
             $erros[] = 'As senhas não coincidem.';
         }
-        if (!empty($erros)) {
-            return;
+        // Somente cargos autorizados podem ser cadastrados.
+        $cargosPermitidos = ['GERENTE'];
+        if (!in_array($tipo, $cargosPermitidos, true)) {
+            $erros[] = 'Cargo inválido.';
         }
 
-        $repository = new UsuarioRepository();
-
-        // Verifica se o e-mail já foi cadastrado.
-        if ($repository->findByEmail($email)) {
+        if ($this->repository->findByEmail($email)) {
             $erros[] = 'Este e-mail já está cadastrado.';
-            return;
+        }
+        
+        if (!empty($erros)) {
+            $this->responder([
+                'sucesso' => false,
+                'erros' => $erros
+            ]);
         }
 
-        // Transforma a senha em hash.
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-        // Cria o objeto Usuario.
         $usuario = new Usuario(
             $nome,
             $email,
             $senhaHash,
-            'FUNCIONARIO'
+            $tipo
         );
 
         try {
-            // Salva o usuário no banco.
-            $repository->create($usuario);
+            $this->repository->create($usuario);
         } catch (\PDOException $e) {
-            $erros[] = 'Não foi possível concluir o cadastro. Verifique os dados e tente novamente.';
+            $this->responder([
+                'sucesso' => false,
+                'erros' => ['Não foi possível cadastrar o usuário.']
+            ]);
+        }
+
+        $this->responder([
+            'sucesso' => true,
+            'mensagem' => 'Usuário cadastrado com sucesso.'
+        ]);
+    }
+
+    public function edit(int $id)
+    {
+        $this->verificarAdmin();
+
+        $usuario = $this->repository->findById($id);
+
+        if (!$usuario) {
+            http_response_code(404);
+            echo 'Usuário não encontrado.';
             return;
         }
 
-        exit;
+        require __DIR__ . '/../Views/usuarios/edit.php';
     }
 
-    public function findAll() {
-        $usuarios = $this->repository->findAll();
-        return $usuarios;
+    public function update() {
+        $this->verificarAdmin();
+
+        $id = (int) ($_POST['id'] ?? 0);
+        $nome = trim($_POST['nome'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $tipo = $_POST['tipo'] ?? '';
+        $senha = $_POST['senha'] ?? '';
+
+        $erros = [];
+
+        $usuarioExistente = $this->repository->findById($id);
+
+        if (!$usuarioExistente) {
+            $erros[] = 'Usuário não encontrado.';
+        }
+
+        if ($nome === '' || mb_strlen($nome) > 100) {
+            $erros[] = 'Informe um nome válido.';
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $erros[] = 'Informe um e-mail válido.';
+        }
+
+        if (!in_array($tipo, ['GERENTE'], true)) {
+            $erros[] = 'Cargo inválido.';
+        }
+
+        if ($senha !== '' && strlen($senha) < 6) {
+            $erros[] = 'A nova senha deve ter pelo menos 6 caracteres.';
+        }
+
+        $outroUsuario = $this->repository->findByEmail($email);
+
+        if ($outroUsuario && (int) $outroUsuario['ID'] !== $id) {
+            $erros[] = 'Este e-mail já está cadastrado.';
+        }
+
+        if (!empty($erros)) {
+            $this->responder([
+                'sucesso' => false,
+                'erros' => $erros
+            ]);
+        }
+
+        // Não permite alterar a própria conta ADMIN por esta tela.
+        if ($usuarioExistente['TIPO'] === 'ADMIN') {
+            $this->responder([
+                'sucesso' => false,
+                'erros' => ['A conta administradora não pode ser alterada por esta operação.']
+            ]);
+        }
+
+        $senhaHash = $senha !== ''
+            ? password_hash($senha, PASSWORD_DEFAULT)
+            : $usuarioExistente['SENHA'];
+
+        $usuario = new Usuario(
+            $nome,
+            $email,
+            $senhaHash,
+            $tipo
+        );
+
+        $usuario->setId($id);
+
+        $this->repository->update($usuario);
+
+        $this->responder([
+            'sucesso' => true,
+            'mensagem' => 'Usuário atualizado com sucesso.'
+        ]);
     }
 }
-?>
