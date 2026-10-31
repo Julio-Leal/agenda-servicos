@@ -11,7 +11,7 @@ class UsuarioController {
         $this->repository = new UsuarioRepository();
     }
 
-    public function create(Usuario $usuario) {
+    public function store() {
         //Verifica se o usuaário já possui uma sessão
         if (isset($_SESSION['usuario_id'])) {
             exit;
