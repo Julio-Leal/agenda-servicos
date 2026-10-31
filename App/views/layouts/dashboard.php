@@ -73,6 +73,15 @@
                     <span>Clientes</span>
                 </a>
 
+                <a href="#" class="nav-item" data-pagina="usuarios">
+                    <svg viewBox="0 0 24 24" fill="black" aria-hidden="true">
+                        <circle cx="12" cy="8" r="3"></circle>
+                        <path d="M5 20a7 7 0 0 1 14 0"></path>
+                    </svg>
+                    <span>Usuários</span>
+                    <span title="Disponível apenas para ADM">???</span>
+                </a>
+
                 <a href="#" class="nav-item" data-pagina="configuracoes">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle cx="12" cy="12" r="3"></circle>
