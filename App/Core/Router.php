@@ -6,6 +6,7 @@ use App\Controllers\AuthController;
 use App\Controllers\ClienteController;
 use App\Controllers\ServicoController;
 use App\Controllers\ProfissionalController;
+use App\Controllers\UsuarioController;
 
 class Router
 {
@@ -18,12 +19,6 @@ class Router
                 $controller = new AuthController();
                 $controller->login();
 
-                break;
-            
-            case 'cadastro':
-                $controller = new AuthController();
-                $controller->cadastro();
-                
                 break;
             
             case 'logout':
@@ -89,6 +84,20 @@ class Router
 
                 $controller->edit($id);
 
+                break;
+
+            case 'usuarios':
+                $this->verificarLogin();
+
+                $controller = new UsuarioController();
+
+                if ($acao === 'store') {
+                    $controller->store();
+                    break;
+                }
+
+                $controller->index();
+                
                 break;
 
             case 'servicos':
