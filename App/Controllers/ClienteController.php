@@ -11,11 +11,6 @@
             $this->repository  = new ClienteRepository();
         }
 
-        public function create(Cliente $cliente) {
-            $resultado = $this->repository->create($cliente);
-            return $resultado;
-        }
-
         public function findAll() {
             $clientes = $this->repository->findAll();
             return $clientes;
