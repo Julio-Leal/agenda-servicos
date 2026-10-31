@@ -17,7 +17,7 @@
             <div class="hero__content">
 
                 <div class="hero__logo">
-                    <img src="" alt="Logo Agenda de Serviços">
+                    <img src="assets/img/pngtree-color-logo-vector-design-free-png-png-image_6114045.png" alt="Logo Agenda de Serviços">
                     <h1>Agenda de Serviços</h1>
                 </div>
 
