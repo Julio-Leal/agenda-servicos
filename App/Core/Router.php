@@ -87,7 +87,7 @@ class Router
                 break;
 
             case 'usuarios':
-                $this->verificarLogin();
+                $this->verificarAdmin();
 
                 $controller = new UsuarioController();
 
@@ -96,10 +96,36 @@ class Router
                     break;
                 }
 
+                if ($acao === 'update') {
+                    $controller->update();
+                    break;
+                }
+
                 $controller->index();
                 
                 break;
+            
+            ////
+            case 'usuarios-create':
 
+                $this->verificarAdmin();
+
+                require __DIR__ . '/../Views/usuarios/create.php';
+
+                break;
+
+            case 'usuarios-edit':
+
+                $this->verificarAdmin();
+
+                $controller = new UsuarioController();
+
+                $id = (int) ($_GET['id'] ?? 0);
+
+                $controller->edit($id);
+
+                break;
+            ////
             case 'servicos':
 
                 $this->verificarLogin();
@@ -197,6 +223,16 @@ class Router
     {
         if (!isset($_SESSION['usuario_id'])) {
             header('Location: index.php?pagina=login');
+            exit;
+        }
+    }
+
+    private function verificarAdmin() {
+        $this->verificarLogin();
+
+        if (($_SESSION['usuario_tipo'] ?? '') !== 'ADMIN') {
+            http_response_code(403);
+            echo 'Acesso negado. Somente o administrador pode acessar esta área.';
             exit;
         }
     }
