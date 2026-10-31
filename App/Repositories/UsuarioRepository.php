@@ -45,4 +45,14 @@ class UsuarioRepository
 
         return $stmt->fetch();
     }
+
+    public function findAll() {
+        $sql = "SELECT NOME, TIPO, CRIADO_EM 
+                FROM usuario
+                ORDER BY NOME";
+                
+        $stmt = $this->connection->query($sql);
+        
+        return $stmt->fetchAll();
+    }
 }
