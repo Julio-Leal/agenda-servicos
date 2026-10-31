@@ -26,10 +26,10 @@
             return $cliente;
         }
 
-/*         public function update(Cliente $cliente) {
+/*          public function update(Cliente $cliente) {
             $resultado = $this->repository->update($cliente);
             return $resultado;
-        } */
+} */
 
         //temp
         public function update() {
