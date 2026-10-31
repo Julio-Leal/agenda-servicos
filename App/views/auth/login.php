@@ -94,10 +94,12 @@
                         Entrar
                     </button>
 
+<!-- TRECHO COMENTADO PARA UTILIZACAO FUTURA                   
                     <p class="login__register">
                         Não tem uma conta?
                         <a href="index.php?pagina=cadastro">Criar conta</a>
-                    </p>
+                    </p> 
+-->
 
                 </form>
 
