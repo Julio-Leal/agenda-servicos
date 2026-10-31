@@ -11,6 +11,7 @@
     --dashboard-radius: 12px;
     --dashboard-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
     --dashboard-transition: 0.2s ease;
+    --dashboard-confirmed: #D1FAE5;
 }
 
 /* 
