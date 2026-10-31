@@ -13,14 +13,14 @@ class Router
     public function handle($pagina, $acao = null)
     {
         switch ($pagina) {
-
+            //Autenticação --
             case 'login':
 
                 $controller = new AuthController();
                 $controller->login();
 
                 break;
-            
+                
             case 'logout':
 
                 $this->verificarLogin();
@@ -29,7 +29,7 @@ class Router
                 $controller->logout();
 
                 break;
-
+            //Dashboard -- 
             case 'dashboard':
 
                 $this->verificarLogin();
@@ -37,32 +37,22 @@ class Router
                 require __DIR__ . '/../Views/dashboard/index.php';
 
                 break;
-
+            //Clientes --
             case 'clientes':
 
                 $this->verificarLogin();
 
                 $controller = new ClienteController();
 
-                if ($acao === 'store') {
-                    $controller->store();
-                    break;
-                }
-
-                if ($acao === 'update') {
-                    $controller->update();
-                    break;
-                }
-
-                if ($acao === 'delete') {
-                    $id = (int) ($_GET['id'] ?? 0);
-
-                    $controller->delete($id);
-
-                    break;
-                }
-
-                $controller->index();
+                $this->executarAcao(
+                    $controller,
+                    $acao,
+                    [
+                        'store'  => 'store',
+                        'update' => 'update',
+                        'delete' => 'delete'
+                    ]
+                );
 
                 break;
 
@@ -85,65 +75,18 @@ class Router
                 $controller->edit($id);
 
                 break;
-
-            case 'usuarios':
-                $this->verificarAdmin();
-
-                $controller = new UsuarioController();
-
-                if ($acao === 'store') {
-                    $controller->store();
-                    break;
-                }
-
-                if ($acao === 'update') {
-                    $controller->update();
-                    break;
-                }
-
-                $controller->index();
-                
-                break;
-            
-            ////
-            case 'usuarios-create':
-
-                $this->verificarAdmin();
-
-                require __DIR__ . '/../Views/usuarios/create.php';
-
-                break;
-
-            case 'usuarios-edit':
-
-                $this->verificarAdmin();
-
-                $controller = new UsuarioController();
-
-                $id = (int) ($_GET['id'] ?? 0);
-
-                $controller->edit($id);
-
-                break;
-            ////
+            //Serviços --
             case 'servicos':
-
                 $this->verificarLogin();
-
                 $controller = new ServicoController();
-
-                if ($acao === 'store') {
-                    $controller->store();
-                    break;
-                }
-
-                if ($acao === 'update') {
-                    $controller->update();
-                    break;
-                }
-
-                $controller->index();
-
+                $this->executarAcao(
+                    $controller,
+                    $acao,
+                    [
+                        'store'  => 'store',
+                        'update' => 'update'
+                    ]
+                );
                 break;
 
             case 'servicos-create':
@@ -154,23 +97,32 @@ class Router
 
                 break;
 
+            case 'servicos-edit':
+
+                $this->verificarLogin();
+
+                $controller = new ServicoController();
+
+                $id = (int) ($_GET['id'] ?? 0);
+
+                $controller->edit($id);
+
+                break;
+            //Profissionais --
             case 'profissionais':
 
                 $this->verificarLogin();
 
                 $controller = new ProfissionalController();
 
-                if ($acao === 'store') {
-                    $controller->store();
-                    break;
-                }
-
-                if ($acao === 'update') {
-                    $controller->update();
-                    break;
-                }
-
-                $controller->index();
+                $this->executarAcao(
+                    $controller,
+                    $acao,
+                    [
+                        'store'  => 'store',
+                        'update' => 'update'
+                    ]
+                );
 
                 break;
 
@@ -193,19 +145,44 @@ class Router
                 $controller->edit($id);
 
                 break;
+            //Usuários -- Adm Only
+            case 'usuarios':
 
-            case 'servicos-edit':
+                $this->verificarAdmin();
 
-                $this->verificarLogin();
+                $controller = new UsuarioController();
 
-                $controller = new ServicoController();
+                $this->executarAcao(
+                    $controller,
+                    $acao,
+                    [
+                        'store'  => 'store',
+                        'update' => 'update'
+                    ]
+                );
+
+                break;
+
+            case 'usuarios-create':
+
+                $this->verificarAdmin();
+
+                require __DIR__ . '/../Views/usuarios/create.php';
+
+                break;
+
+            case 'usuarios-edit':
+
+                $this->verificarAdmin();
+
+                $controller = new UsuarioController();
 
                 $id = (int) ($_GET['id'] ?? 0);
 
                 $controller->edit($id);
 
                 break;
-
+            //Ronta não encontrada --
             default:
 
                 if (isset($_SESSION['usuario_id'])) {
@@ -219,6 +196,22 @@ class Router
         }
     }
 
+    //Padroniza a execução de ações --
+    private function executarAcao($controller, $acao, array $acoes)
+    {
+        if ($acao !== null && isset($acoes[$acao])) {
+
+            $metodo = $acoes[$acao];
+
+            $controller->$metodo();
+
+            return;
+        }
+
+        $controller->index();
+    }
+
+    //Controle de aceso --
     private function verificarLogin()
     {
         if (!isset($_SESSION['usuario_id'])) {
