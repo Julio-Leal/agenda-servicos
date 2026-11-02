@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Repositories\UsuarioRepository;
 use App\Models\Usuario;
+use PDOException;
 
 class UsuarioController {
-    private $repository;
+    private UsuarioRepository $repository;
+    private const CARGOS_PERMITIDOS = ['GERENTE'];
 
     public function __construct() {
         $this->repository = new UsuarioRepository();
     }
 
+    //Métodos auxiliares --
     private function verificarAdmin(): void {
         if (
             !isset($_SESSION['usuario_id']) ||
@@ -22,13 +25,66 @@ class UsuarioController {
         }
     }
 
-    private function responder(array $dados): void {
+    private function responder(array $dados, int $status = 200): void {
+        http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($dados);
         exit;
     }
 
-    public function index() {
+    private function responderErroBanco(): void {
+        $this->responder([
+            'sucesso' => false,
+            'erros' => ['Não foi possível concluir a operação. Tente novamente.']
+        ], 500);
+    }
+
+    private function validarDados(
+        string $nome,
+        string $email,
+        string $tipo,
+        string $senha = '',
+        ?int $id = null
+    ): array {
+        $erros = [];
+
+        // Validação do nome --
+        if ($nome === '' || mb_strlen($nome) > 100) {
+            $erros[] = 'Informe um nome válido.';
+        }
+
+        // Validação do e-mail --
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $erros[] = 'Informe um e-mail válido.';
+        } else {
+            $outroUsuario = $this->repository->findByEmail($email);
+
+            if (
+                $outroUsuario &&
+                (int) $outroUsuario['ID'] !== $id
+            ) {
+                $erros[] = 'Este e-mail já está cadastrado.';
+            }
+        }
+
+        // Validação do cargo --
+        if (!in_array($tipo, self::CARGOS_PERMITIDOS, true)) {
+            $erros[] = 'Cargo inválido.';
+        }
+
+        // A senha só é obrigatória no cadastro.
+        // Na edição, uma senha vazia significa manter a atual.
+        if ($id === null && strlen($senha) < 6) {
+            $erros[] = 'A senha deve ter pelo menos 6 caracteres.';
+        } elseif ($id !== null && $senha !== '' && strlen($senha) < 6) {
+            $erros[] = 'A nova senha deve ter pelo menos 6 caracteres.';
+        }
+
+        return $erros;
+    }
+
+    //Listagem --
+    public function index(): void {
         $this->verificarAdmin();
 
         $usuarios = $this->repository->findAll();
@@ -36,7 +92,8 @@ class UsuarioController {
         require __DIR__ . '/../Views/usuarios/index.php';
     }
 
-    public function store() {
+    //Cadastro --
+    public function store(): void {
         $this->verificarAdmin();
 
         $nome = trim($_POST['nome'] ?? '');
@@ -45,77 +102,64 @@ class UsuarioController {
         $confirmarSenha = $_POST['confirmar_senha'] ?? '';
         $tipo = $_POST['tipo'] ?? '';
 
-        $erros = [];
-
-        if ($nome === '' || mb_strlen($nome) > 100) {
-            $erros[] = 'Informe um nome válido.';
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $erros[] = 'Informe um e-mail válido.';
-        }
-        if (strlen($senha) < 6) {
-            $erros[] = 'A senha deve ter pelo menos 6 caracteres.';
-        }
-        if ($senha !== $confirmarSenha) {
-            $erros[] = 'As senhas não coincidem.';
-        }
-        // Somente cargos autorizados podem ser cadastrados.
-        $cargosPermitidos = ['GERENTE'];
-        if (!in_array($tipo, $cargosPermitidos, true)) {
-            $erros[] = 'Cargo inválido.';
-        }
-
-        if ($this->repository->findByEmail($email)) {
-            $erros[] = 'Este e-mail já está cadastrado.';
-        }
-        
-        if (!empty($erros)) {
-            $this->responder([
-                'sucesso' => false,
-                'erros' => $erros
-            ]);
-        }
-
-        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-        $usuario = new Usuario(
-            $nome,
-            $email,
-            $senhaHash,
-            $tipo
-        );
-
         try {
+            $erros = $this->validarDados(
+                $nome,
+                $email,
+                $tipo,
+                $senha
+            );
+
+            if ($senha !== $confirmarSenha) {
+                $erros[] = 'As senhas não coincidem.';
+            }
+
+            if (!empty($erros)) {
+                $this->responder([
+                    'sucesso' => false,
+                    'erros' => $erros
+                ], 422);
+            }
+
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+            $usuario = new Usuario(
+                $nome,
+                $email,
+                $senhaHash,
+                $tipo
+            );
+
             $this->repository->create($usuario);
-        } catch (\PDOException $e) {
+
             $this->responder([
-                'sucesso' => false,
-                'erros' => ['Não foi possível cadastrar o usuário.']
-            ]);
+                'sucesso' => true,
+                'mensagem' => 'Usuário cadastrado com sucesso.'
+            ], 201);
+
+        } catch (PDOException $e) {
+            $this->responderErroBanco();
         }
 
-        $this->responder([
-            'sucesso' => true,
-            'mensagem' => 'Usuário cadastrado com sucesso.'
-        ]);
+        exit;
     }
 
-    public function edit(int $id)
-    {
+    //Edição -- Exibição do formulário.
+    public function edit(int $id): void {
         $this->verificarAdmin();
 
         $usuario = $this->repository->findById($id);
 
         if (!$usuario) {
             http_response_code(404);
-            echo 'Usuário não encontrado.';
-            return;
+            exit('Usuário não encontrado.');
         }
 
         require __DIR__ . '/../Views/usuarios/edit.php';
     }
 
-    public function update() {
+    //Edição -- Atualização dos dados
+    public function update(): void {
         $this->verificarAdmin();
 
         $id = (int) ($_POST['id'] ?? 0);
@@ -124,69 +168,67 @@ class UsuarioController {
         $tipo = $_POST['tipo'] ?? '';
         $senha = $_POST['senha'] ?? '';
 
-        $erros = [];
+        try {
+            $usuarioExistente = $this->repository->findById($id);
 
-        $usuarioExistente = $this->repository->findById($id);
+            if (!$usuarioExistente) {
+                $this->responder([
+                    'sucesso' => false,
+                    'erros' => ['Usuário não encontrado.']
+                ], 404);
+            }
 
-        if (!$usuarioExistente) {
-            $erros[] = 'Usuário não encontrado.';
-        }
+            // A conta ADMIN não pode ser alterada por esta tela. -- 
+            if ($usuarioExistente['TIPO'] === 'ADMIN') {
+                $this->responder([
+                    'sucesso' => false,
+                    'erros' => [
+                        'A conta administradora não pode ser alterada por esta operação.'
+                    ]
+                ], 403);
+            }
 
-        if ($nome === '' || mb_strlen($nome) > 100) {
-            $erros[] = 'Informe um nome válido.';
-        }
+            $erros = $this->validarDados(
+                $nome,
+                $email,
+                $tipo,
+                $senha,
+                $id
+            );
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $erros[] = 'Informe um e-mail válido.';
-        }
+            if (!empty($erros)) {
+                $this->responder([
+                    'sucesso' => false,
+                    'erros' => $erros
+                ], 422);
+            }
 
-        if (!in_array($tipo, ['GERENTE'], true)) {
-            $erros[] = 'Cargo inválido.';
-        }
+            // Se uma nova senha foi informada, gera outro hash.
+            // Caso contrário, preserva o hash atual.
+            $senhaHash = $senha !== ''
+                ? password_hash($senha, PASSWORD_DEFAULT)
+                : $usuarioExistente['SENHA'];
 
-        if ($senha !== '' && strlen($senha) < 6) {
-            $erros[] = 'A nova senha deve ter pelo menos 6 caracteres.';
-        }
+            $usuario = new Usuario(
+                $nome,
+                $email,
+                $senhaHash,
+                $tipo
+            );
 
-        $outroUsuario = $this->repository->findByEmail($email);
+            $usuario->setId($id);
 
-        if ($outroUsuario && (int) $outroUsuario['ID'] !== $id) {
-            $erros[] = 'Este e-mail já está cadastrado.';
-        }
+            $this->repository->update($usuario);
 
-        if (!empty($erros)) {
             $this->responder([
-                'sucesso' => false,
-                'erros' => $erros
+                'sucesso' => true,
+                'mensagem' => 'Usuário atualizado com sucesso.'
             ]);
+
+        } catch (PDOException $e) {
+            $this->responderErroBanco();
         }
 
-        // Não permite alterar a própria conta ADMIN por esta tela.
-        if ($usuarioExistente['TIPO'] === 'ADMIN') {
-            $this->responder([
-                'sucesso' => false,
-                'erros' => ['A conta administradora não pode ser alterada por esta operação.']
-            ]);
-        }
-
-        $senhaHash = $senha !== ''
-            ? password_hash($senha, PASSWORD_DEFAULT)
-            : $usuarioExistente['SENHA'];
-
-        $usuario = new Usuario(
-            $nome,
-            $email,
-            $senhaHash,
-            $tipo
-        );
-
-        $usuario->setId($id);
-
-        $this->repository->update($usuario);
-
-        $this->responder([
-            'sucesso' => true,
-            'mensagem' => 'Usuário atualizado com sucesso.'
-        ]);
+        exit;
     }
 }
