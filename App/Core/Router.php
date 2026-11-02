@@ -44,13 +44,21 @@ class Router
 
                 $controller = new ClienteController();
 
+                if ($acao === 'delete') {
+
+                    $id = (int) ($_POST['id'] ?? 0);
+
+                    $controller->delete($id);
+
+                    break;
+                }
+
                 $this->executarAcao(
                     $controller,
                     $acao,
                     [
                         'store'  => 'store',
-                        'update' => 'update',
-                        'delete' => 'delete'
+                        'update' => 'update'
                     ]
                 );
 
