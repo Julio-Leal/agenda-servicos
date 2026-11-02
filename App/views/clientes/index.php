@@ -65,7 +65,7 @@
                                     type="button"
                                     class="secondary-button"
                                     data-pagina="clientes-edit"
-                                    data-id="<?= $cliente['ID'] ?>"
+                                    data-id="<?= (int) $cliente['ID'] ?>"
                                 >
                                     Editar
                                 </button>
