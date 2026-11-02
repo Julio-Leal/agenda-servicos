@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('click', function (event) {
         const acao = event.target.closest('[data-acao]');
-
+        
         if (acao && acao.dataset.acao === 'excluir-cliente') {
 
             const id = acao.dataset.id;
@@ -17,27 +17,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            fetch(
-                'index.php?pagina=clientes&acao=delete&id=' + id
-            )
-                .then(function (response) {
-
-                    if (!response.ok) {
-                        throw new Error('Erro ao excluir cliente.');
-                    }
-
-                    return response.text();
+            fetch('index.php?pagina=clientes&acao=delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    id: id
                 })
-                .then(function () {
+            })
+            .then(async function (response) {
 
-                    carregarPagina('clientes');
-                })
-                .catch(function (erro) {
+                const resultado = await response.json();
 
-                    console.error(erro);
+                if (!response.ok || !resultado.sucesso) {
+                    throw new Error(
+                        resultado.mensagem || 'Erro ao excluir cliente.'
+                    );
+                }
 
-                    alert('Não foi possível excluir o cliente.');
-                });
+                return resultado;
+            })
+            .then(function (resultado) {
+
+                alert(resultado.mensagem || 'Cliente excluído com sucesso.');
+
+                carregarPagina('clientes');
+            })
+            .catch(function (erro) {
+
+                console.error('Erro ao excluir cliente:', erro);
+
+                alert(erro.message || 'Não foi possível excluir o cliente.');
+            });
 
             return;
         }
