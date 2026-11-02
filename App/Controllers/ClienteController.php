@@ -75,9 +75,42 @@
         }
         //temp
 
-        public function delete(int $id) {
-            $resultado = $this->repository->delete($id);
-            return $resultado;
+        public function delete(int $id): void
+        {
+            $this->verificarLogin();
+
+            if ($id <= 0) {
+                $this->responder([
+                    'sucesso' => false,
+                    'mensagem' => 'ID do cliente inválido.'
+                ], 422);
+            }
+
+            try {
+                $cliente = $this->repository->findById($id);
+                if (!$cliente) {
+                    $this->responder([
+                        'sucesso' => false,
+                        'mensagem' => 'Cliente não encontrado.'
+                    ], 404);
+                }
+                $resultado = $this->repository->delete($id);
+                if (!$resultado) {
+                    $this->responder([
+                        'sucesso' => false,
+                        'mensagem' => 'Não foi possível excluir o cliente.'
+                    ], 500);
+                }
+                $this->responder([
+                    'sucesso' => true,
+                    'mensagem' => 'Cliente excluído com sucesso.'
+                ]);
+            } catch (\PDOException $e) {
+                $this->responder([
+                    'sucesso' => false,
+                    'mensagem' => 'Erro ao excluir o cliente.'
+                ], 500);
+            }
         }
 
         public function index() {
@@ -202,6 +235,27 @@
             }
 
             require __DIR__ . '/../Views/clientes/edit.php';
+        }
+
+        // -----TESTE
+        private function responder(array $dados, int $status = 200): void
+        {
+            http_response_code($status);
+
+            header('Content-Type: application/json; charset=utf-8');
+
+            echo json_encode($dados);
+            exit;
+        }
+
+        private function verificarLogin(): void
+        {
+            if (!isset($_SESSION['usuario_id'])) {
+                $this->responder([
+                    'sucesso' => false,
+                    'mensagem' => 'Você precisa estar autenticado.'
+                ], 401);
+            }
         }
     }
 ?>
