@@ -113,7 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.addEventListener('submit', function (event) {
+    
+    document.addEventListener('submit', async function (event) {
 
         const formulario = event.target.closest(
             '#form-cliente, #form-servico, #form-profissional, #form-usuario'
@@ -124,38 +125,41 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         event.preventDefault();
+        //temp para teste:
+        //console.log('Formulário interceptado:', formulario.id); VALIDADO
+        //temp para teste:
 
         const dados = new FormData(formulario);
 
-        fetch(formulario.action, {
-            method: 'POST',
-            body: dados
-        })
-            .then(function (response) {
+        try {
 
-                if (!response.ok) {
-                    throw new Error('Erro ao salvar os dados.');
-                }
-
-                return response.json();
-            })
-            .then(function (resultado) {
-
-                if (resultado.sucesso) {
-
-                    carregarPagina(formulario.dataset.paginaRetorno);
-
-                } else {
-
-                    alert(resultado.erros.join('\n'));
-                }
-            })
-            .catch(function (erro) {
-
-                console.error(erro);
-
-                alert('Não foi possível salvar os dados.');
+            const response = await fetch(formulario.action, {
+                method: 'POST',
+                body: dados
             });
-    });
 
+            const resultado = await response.json();
+
+            if (!response.ok || !resultado.sucesso) {
+
+                const erros = resultado.erros || [
+                    resultado.mensagem || 'Não foi possível salvar os dados.'
+                ];
+
+                alert(erros.join('\n'));
+                return;
+            }
+
+            // Após o sucesso, retorna para a listagem.
+            const paginaRetorno = formulario.dataset.paginaRetorno;
+
+            carregarPagina(paginaRetorno);
+
+        } catch (erro) {
+
+            console.error('Erro ao enviar formulário:', erro);
+
+            alert('Não foi possível processar a solicitação.');
+        }
+    });
 });
