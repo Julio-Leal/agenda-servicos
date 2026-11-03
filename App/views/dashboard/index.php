@@ -13,26 +13,34 @@
 
     <article class="stat-card">
         <span class="stat-card__label">Agendamentos hoje</span>
-        <strong class="stat-card__value">12</strong>
+        <strong class="stat-card__value">
+            <?= htmlspecialchars((string) $agendamentosHoje) ?>
+        </strong>
         <span class="stat-card__description">3 aguardando confirmação</span>
     </article>
 
     <article class="stat-card">
         <span class="stat-card__label">Clientes</span>
-        <strong class="stat-card__value">248</strong>
+        <strong class="stat-card__value">
+            <?= htmlspecialchars((string) $clientesCadastrados) ?>
+        </strong>
         <span class="stat-card__description">Clientes cadastrados</span>
     </article>
 
     <article class="stat-card">
         <span class="stat-card__label">Serviços ativos</span>
-        <strong class="stat-card__value">16</strong>
+        <strong class="stat-card__value">
+            <?= htmlspecialchars((string) $servicosAtivos) ?>
+        </strong>
         <span class="stat-card__description">Disponíveis para agendamento</span>
     </article>
 
     <article class="stat-card">
         <span class="stat-card__label">Funcionários</span>
-        <strong class="stat-card__value">8</strong>
-        <span class="stat-card__description">Profissionais cadastrados</span>
+        <strong class="stat-card__value">
+            <?= htmlspecialchars((string) $funcionariosAtivos) ?>
+        </strong>
+        <span class="stat-card__description">Profissionais ativos</span>
     </article>
 
 </section>
