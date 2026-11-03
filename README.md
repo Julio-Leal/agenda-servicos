@@ -39,12 +39,12 @@ Para executar o sistema, é necessário ter instalado:
 ```text
 agenda-servicos/
 │
-├── app/
+├── App/
 │   ├── Controllers/
 │   ├── Core/
 │   ├── Models/
 │   ├── Repositories/
-│   └── Views/
+│   └── views/
 │
 ├── config/
 │   └── database.php
@@ -55,6 +55,9 @@ agenda-servicos/
 │
 ├── public/
 │   ├── assets/
+│   │   ├── css/
+│   │   ├── img/
+│   │   └── js/
 │   └── index.php
 │
 ├── vendor/
@@ -71,7 +74,7 @@ agenda-servicos/
 - **Core:** contém componentes centrais da aplicação, como conexão com o banco e roteamento.
 - **config:** contém as configurações do sistema.
 - **database:** contém os scripts SQL necessários para criação e atualização do banco.
-- **public:** contém o ponto de entrada da aplicação.
+- **public:** contém o ponto de entrada da aplicação e os arquivos públicos de CSS, JavaScript e imagens.
 
 ## Instalação e configuração
 
@@ -277,6 +280,7 @@ O projeto utiliza algumas práticas básicas de segurança:
 - prepared statements;
 - validações no servidor;
 - escape de dados apresentados no HTML.
+- verificação do perfil administrativo para acesso à área de usuários.
 
 ## Estado atual do projeto
 
@@ -298,17 +302,28 @@ O projeto utiliza algumas práticas básicas de segurança:
 - [x] Interface gráfica
 - [x] Listagem de dados
 - [x] Cadastro e edição de clientes
+- [x] Exclusão de clientes
 - [x] Cadastro e edição de serviços
+- [x] Alteração do status dos serviços
 - [x] Cadastro e edição de profissionais
+- [x] Alteração do status dos profissionais
+- [x] Cadastro, listagem e edição de usuários
 
-### Próximas funcionalidades
+### Evolução atual
 
-As funcionalidades abaixo fazem parte da evolução planejada do sistema:
-
-- [ ] Cadastro e gerenciamento de agendamentos
+- [x] Estrutura inicial do dashboard
+- [x] Consulta de agendamentos do dia
+- [x] Consulta de clientes cadastrados
+- [x] Consulta de profissionais ativos
+- [x] Consulta de serviços ativos
+- [x] Model e Repository iniciais de agendamento
+- [ ] Integração completa do Model Dashboard ao Controller
+- [ ] Cálculo do faturamento mensal
+- [ ] Exibição dos próximos agendamentos reais
+- [ ] Cadastro e gerenciamento de agendamentos integrado ao sistema
 - [ ] Regras de conflito de horários
-- [ ] Dashboard com dados reais do sistema
 - [ ] Revisão final de testes e validações
+- [ ] Implementação e integração das URLs amigáveis
 
 ## Observações
 
@@ -316,11 +331,11 @@ O projeto está sendo desenvolvido individualmente por **JÚLIO ANDRÉ CAVALCANT
 
 O Trabalho 1 concentra os requisitos de PHP, formulários, validação no servidor, separação da lógica e apresentação e autenticação.
 
-O módulo de profissionais foi incluído como o terceiro conjunto de cadastro/edição do Trabalho 1. O módulo de agendamentos será desenvolvido nas etapas seguintes do projeto.
+Após a implementação das funcionalidades principais de cadastro e autenticação, o projeto recebeu a estrutura inicial de um dashboard, com indicadores consultados diretamente no banco de dados. Também foi iniciada a estrutura do módulo de agendamentos, que ainda precisa ser integrada ao restante da aplicação.
 
 ## Bugs ou limitações conhecidas
 
-Até o momento, as funcionalidades implementadas do Trabalho 1 são:
+Até o momento, as funcionalidades implementadas do sistema incluem:
 
 - autenticação e sessão;
 - cadastro, edição, listagem e exclusão de clientes;
@@ -328,6 +343,19 @@ Até o momento, as funcionalidades implementadas do Trabalho 1 são:
 - alteração do status dos serviços;
 - cadastro, edição e listagem de profissionais;
 - alteração do status dos profissionais;
-- validações no servidor.
+- cadastro, listagem e edição de usuários;
+- validações no servidor;
+- dashboard com consultas reais para quatro indicadores.
 
-As funcionalidades ainda não implementadas estão descritas na seção **Próximas funcionalidades**.
+As seguintes limitações foram identificadas na versão analisada:
+
+- o módulo de agendamentos ainda não possui Controller funcional nem integração com o Router;
+- a área de próximos agendamentos no dashboard ainda não apresenta dados do banco;
+- o cálculo de faturamento mensal ainda não foi implementado;
+- a classe Dashboard ainda não é utilizada pelo Controller;
+- a exclusão de usuários não está implementada;
+- o UsuarioController aceita o cargo GERENTE, enquanto o schema.sql define o campo TIPO com os valores ADMIN e FUNCIONARIO; essa divergência precisa ser resolvida;
+- o diretório de Views está nomeado como App/views, mas existem referências no código para App/Views. Essa diferença de maiúsculas e minúsculas pode causar problemas em ambientes Linux;
+- a migração para URLs amigáveis ainda não foi integrada ao index.php e ao Router;
+- o pacote analisado não contém o arquivo public/.htaccess.
+As funcionalidades ainda não implementadas estão descritas na seção Estado atual do projeto.
