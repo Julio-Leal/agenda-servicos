@@ -7,6 +7,7 @@ use App\Controllers\ClienteController;
 use App\Controllers\ServicoController;
 use App\Controllers\ProfissionalController;
 use App\Controllers\UsuarioController;
+use App\Controllers\DashboardController;
 
 class Router
 {
@@ -34,7 +35,8 @@ class Router
 
                 $this->verificarLogin();
 
-                require __DIR__ . '/../Views/dashboard/index.php';
+                $controller = new DashboardController();
+                $controller->index();
 
                 break;
             //Clientes --
@@ -192,14 +194,13 @@ class Router
                 break;
             //Ronta não encontrada --
             default:
-
                 if (isset($_SESSION['usuario_id'])) {
-                    require __DIR__ . '/../Views/layouts/dashboard.php';
+                    $controller = new DashboardController();
+                    $controller->index();
                 } else {
                     $erros = [];
-                    require __DIR__ . '/../Views/auth/login.php';
+                    require __DIR__ . '/../views/auth/login.php';
                 }
-
                 break;
         }
     }
@@ -208,9 +209,7 @@ class Router
     private function executarAcao($controller, $acao, array $acoes)
     {
         if ($acao !== null && isset($acoes[$acao])) {
-
             $metodo = $acoes[$acao];
-
             $controller->$metodo();
 
             return;
