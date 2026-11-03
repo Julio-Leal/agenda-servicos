@@ -329,7 +329,7 @@ O projeto utiliza algumas práticas básicas de segurança:
 
 O projeto está sendo desenvolvido individualmente por **JÚLIO ANDRÉ CAVALCANTE LEAL**.
 
-O Trabalho 1 concentra os requisitos de PHP, formulários, validação no servidor, separação da lógica e apresentação e autenticação.
+O Trabalho 2 concentra os requisitos de PHP, formulários, validação no servidor, separação da lógica e apresentação e autenticação.
 
 Após a implementação das funcionalidades principais de cadastro e autenticação, o projeto recebeu a estrutura inicial de um dashboard, com indicadores consultados diretamente no banco de dados. Também foi iniciada a estrutura do módulo de agendamentos, que ainda precisa ser integrada ao restante da aplicação.
 
